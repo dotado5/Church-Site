@@ -17,13 +17,13 @@ export const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
   return (
     <header className="flex items-center mt-5">
-      <img src="" alt="icon" />
-      <nav className=" ">
+      <img src="/images/logo.svg" alt="icon" className="ml-7" />
+      <nav className="mx-[25%]">
         <ul className="flex  w-[550px] bg-white gap-2  pl-[5%] py-2 rounded-full">
           {links.map((link, index) => (
             <li
               key={index}
-              className={`navLinks text-lg rounded-3xl p-3 ${
+              className={`navLinks text-md rounded-3xl p-3  ${
                 link.src === currentAddress ? "bg-default text-white" : ""
               } `}
             >
