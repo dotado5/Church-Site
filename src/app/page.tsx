@@ -1,6 +1,6 @@
 "use client";
 
-import { withNavbar } from "@/Layout/WithNavbar";
+import WithNavbar from "@/Layout/WithNavbar";
 import { DescriptionBox } from "@/components/homepageComponents/DescriptionBox";
 import Hero from "@/components/homepageComponents/Hero";
 import LatestArticles from "@/components/homepageComponents/LatestArticles";
@@ -28,4 +28,4 @@ function Home() {
   );
 }
 
-export default withNavbar(Home);
+export default WithNavbar(Home);

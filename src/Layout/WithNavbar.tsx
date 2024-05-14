@@ -4,7 +4,7 @@ import { PageLinkProps } from "@/components/Link";
 import { Navbar } from "@/components/Navbar";
 import { ComponentType } from "react";
 
-export const withNavbar = <Props extends object>(
+const WithNavbar = <Props extends object>(
   WrappedComponent: ComponentType<Props>
 ) => {
   return (props: Props) => {
@@ -18,8 +18,8 @@ export const withNavbar = <Props extends object>(
         content: "Coordinators",
       },
       {
-        src: "/blog",
-        content: "Blog",
+        src: "/blogs",
+        content: "Blogs",
       },
       {
         src: "/gallery",
@@ -38,3 +38,5 @@ export const withNavbar = <Props extends object>(
     );
   };
 };
+
+export default WithNavbar;
