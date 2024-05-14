@@ -2,20 +2,41 @@
 
 import React, { useEffect, useState } from "react";
 import { PageLink, PageLinkProps } from "./Link";
+import { usePathname } from "next/navigation";
 
-interface NavbarProps {
-  links: PageLinkProps[];
-}
-
-export const Navbar: React.FC<NavbarProps> = ({ links }) => {
+export const Navbar = () => {
+  const pathName = usePathname();
   const [currentAddress, setCurrentAddress] = useState<string | string[]>();
 
   useEffect(() => {
-    const address = window.localStorage.getItem("currentAddress");
-    if (address) {
-      setCurrentAddress(address);
+    // const address = window.localStorage.getItem("currentAddress");
+    if (pathName) {
+      setCurrentAddress(pathName);
     }
   }, []);
+
+  const links: PageLinkProps[] = [
+    {
+      src: "/",
+      content: "Home",
+    },
+    {
+      src: "/coordinators",
+      content: "Coordinators",
+    },
+    {
+      src: "/blogs",
+      content: "Blogs",
+    },
+    {
+      src: "/gallery",
+      content: "Gallery",
+    },
+    {
+      src: "/contact",
+      content: "Contact",
+    },
+  ];
 
   return (
     <header className="flex items-center mt-5">

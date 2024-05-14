@@ -43,31 +43,9 @@ const WithNavbar = <Props extends object>(
   WrappedComponent: ComponentType<Props>
 ) => {
   const WithNavbarComponent = (props: Props) => {
-    const links: PageLinkProps[] = [
-      {
-        src: "/",
-        content: "Home",
-      },
-      {
-        src: "/coordinators",
-        content: "Coordinators",
-      },
-      {
-        src: "/blogs",
-        content: "Blogs",
-      },
-      {
-        src: "/gallery",
-        content: "Gallery",
-      },
-      {
-        src: "/contact",
-        content: "Contact",
-      },
-    ];
     return (
       <>
-        <Navbar links={links} />
+        <Navbar />
         <WrappedComponent {...(props as Props)} />
       </>
     );
