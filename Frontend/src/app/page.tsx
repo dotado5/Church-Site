@@ -1,6 +1,7 @@
 "use client";
 
-import WithNavbarAndFooter from "@/Layout/WithNavbar";
+import WithNavbar from "@/Layout/WithNavbar";
+import { Footer } from "@/components/Footer";
 import Activities from "@/components/homepageComponents/Activities";
 import { DescriptionBox } from "@/components/homepageComponents/DescriptionBox";
 import Hero from "@/components/homepageComponents/Hero";
@@ -25,9 +26,10 @@ function Home() {
         <DescriptionBox />
         <LatestArticles />
         <Activities />
+        <Footer />
       </div>
     </main>
   );
 }
 
-export default WithNavbarAndFooter(Home);
+export default WithNavbar(Home);

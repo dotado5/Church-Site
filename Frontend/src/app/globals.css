@@ -17,8 +17,8 @@
 }
 
 body {
-  @apply bg-default
-  /* overflow-hidden; */;
+  @apply bg-default relative;
+  /* overflow-hidden; */
 }
 
 .navLinks {
@@ -34,4 +34,8 @@ body {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.article {
+  box-shadow: 0px 20px 40px 0px #00000033;
 }

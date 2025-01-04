@@ -4,12 +4,15 @@ import { MdArrowOutward } from "react-icons/md";
 interface ButtonProps {
   content: string;
   icon: boolean;
+  className?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({ content, icon }) => {
+export const Button: React.FC<ButtonProps> = ({ content, icon, className }) => {
   return (
     <div className="">
-      <button className="flex bg-button p-4 rounded-full items-center gap-2">
+      <button
+        className={`flex bg-button p-4 rounded-full items-center gap-2 ${className}`}
+      >
         {content}
         {icon && <MdArrowOutward />}
       </button>

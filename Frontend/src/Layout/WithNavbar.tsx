@@ -40,7 +40,7 @@ import { ComponentType } from "react";
 //   };
 // };
 
-const WithNavbarAndFooter = <Props extends object>(
+const WithNavbar = <Props extends object>(
   WrappedComponent: ComponentType<Props>
 ) => {
   const WithNavbarComponent = (props: Props) => {
@@ -48,7 +48,6 @@ const WithNavbarAndFooter = <Props extends object>(
       <>
         <Navbar />
         <WrappedComponent {...(props as Props)} />
-        <Footer />
       </>
     );
   };
@@ -64,4 +63,4 @@ function getDisplayName(WrappedComponent: ComponentType<any>) {
   return WrappedComponent.displayName || WrappedComponent.name || "Component";
 }
 
-export default WithNavbarAndFooter;
+export default WithNavbar;

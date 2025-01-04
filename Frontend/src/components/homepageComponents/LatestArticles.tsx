@@ -1,82 +1,82 @@
 import React from "react";
 import { Article, ArticleProps } from "../Article";
 
-const LatestArticles: React.FC = () => {
-  const articles: ArticleProps[] = [
-    {
-      src: "/images/article1.svg",
-      title: "Youth with a Difference",
-      author: "Author: Fatoki Victor",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-      length: "5 mins read",
-      dateUploaded: "24 hours ago",
-    },
-    {
-      src: "/images/article2.svg",
-      title: "Youth with a Difference",
-      author: "Author: Fatoki Victor",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-      length: "5 mins read",
-      dateUploaded: "24 hours ago",
-    },
-    {
-      src: "/images/article3.svg",
-      title: "Youth with a Difference",
-      author: "Author: Fatoki Victor",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-      length: "5 mins read",
-      dateUploaded: "24 hours ago",
-    },
-    {
-      src: "/images/article4.svg",
-      title: "Youth with a Difference",
-      author: "Author: Fatoki Victor",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-      length: "5 mins read",
-      dateUploaded: "24 hours ago",
-    },
-    {
-      src: "/images/article5.svg",
-      title: "Youth with a Difference",
-      author: "Author: Fatoki Victor",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-      length: "5 mins read",
-      dateUploaded: "24 hours ago",
-    },
-    {
-      src: "/images/article6.svg",
-      title: "Youth with a Difference",
-      author: "Author: Fatoki Victor",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-      length: "5 mins read",
-      dateUploaded: "24 hours ago",
-    },
-    {
-      src: "/images/article7.svg",
-      title: "Youth with a Difference",
-      author: "Author: Fatoki Victor",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-      length: "5 mins read",
-      dateUploaded: "24 hours ago",
-    },
-    {
-      src: "/images/article8.svg",
-      title: "Youth with a Difference",
-      author: "Author: Fatoki Victor",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-      length: "5 mins read",
-      dateUploaded: "24 hours ago",
-    },
-  ];
+export const articles: ArticleProps[] = [
+  {
+    src: "/images/article1.svg",
+    title: "Youth with a Difference",
+    author: "Author: Fatoki Victor",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
+    length: "5 mins read",
+    dateUploaded: "24 hours ago",
+  },
+  {
+    src: "/images/article2.svg",
+    title: "Youth with a Difference",
+    author: "Author: Fatoki Victor",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
+    length: "5 mins read",
+    dateUploaded: "24 hours ago",
+  },
+  {
+    src: "/images/article3.svg",
+    title: "Youth with a Difference",
+    author: "Author: Fatoki Victor",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
+    length: "5 mins read",
+    dateUploaded: "24 hours ago",
+  },
+  {
+    src: "/images/article4.svg",
+    title: "Youth with a Difference",
+    author: "Author: Fatoki Victor",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
+    length: "5 mins read",
+    dateUploaded: "24 hours ago",
+  },
+  {
+    src: "/images/article5.svg",
+    title: "Youth with a Difference",
+    author: "Author: Fatoki Victor",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
+    length: "5 mins read",
+    dateUploaded: "24 hours ago",
+  },
+  {
+    src: "/images/article6.svg",
+    title: "Youth with a Difference",
+    author: "Author: Fatoki Victor",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
+    length: "5 mins read",
+    dateUploaded: "24 hours ago",
+  },
+  {
+    src: "/images/article7.svg",
+    title: "Youth with a Difference",
+    author: "Author: Fatoki Victor",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
+    length: "5 mins read",
+    dateUploaded: "24 hours ago",
+  },
+  {
+    src: "/images/article8.svg",
+    title: "Youth with a Difference",
+    author: "Author: Fatoki Victor",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
+    length: "5 mins read",
+    dateUploaded: "24 hours ago",
+  },
+];
 
+const LatestArticles: React.FC = () => {
   return (
     <div className="mx-auto flex flex-col items-center">
       <h6 className="text-button text-[20px]">MOJITES THOUGHT</h6>
@@ -91,6 +91,7 @@ const LatestArticles: React.FC = () => {
             length={article.length}
             dateUploaded={article.dateUploaded}
             key={index}
+            homePage={true}
           />
         ))}
       </div>
