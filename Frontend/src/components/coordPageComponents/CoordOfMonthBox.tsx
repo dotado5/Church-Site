@@ -30,17 +30,17 @@ const CoordOfMonthBox = () => {
           variety of projects and expand my portfolio. I am particularly
           interested in designing solutions to real-world challenges and meeting
           consumer demands. I have an eye for detail and thrive in creating
-          visually appealing, user-friendly designs. I'm an excellent
+          visually appealing, user-friendly designs. I&apos;m an excellent
           communicator who enjoys collaborating with various stakeholders to
           create effective designs. I am also competent at clearly and
-          persuasively conveying my concepts and thoughts to others. I've had
-          the honor of working as a UI Designer for a Financial Organization and
-          an Event Planning and Management Company. In each of these projects, I
-          brought my abilities and passion to bear, creating designs that were
-          user-friendly, visually beautiful, and effective in reaching the
-          client's goals. While I’m not designing I am either at the Farm or
-          working as a Project Management Team Member at nowsoundsfriday a
-          subsidiary of TheRealNOW Company. I prefer to stay current on design
+          persuasively conveying my concepts and thoughts to others. I&apos;ve
+          had the honor of working as a UI Designer for a Financial Organization
+          and an Event Planning and Management Company. In each of these
+          projects, I brought my abilities and passion to bear, creating designs
+          that were user-friendly, visually beautiful, and effective in reaching
+          the client&apos;s goals. While I’m not designing I am either at the
+          Farm or working as a Project Management Team Member at nowsoundsfriday
+          a subsidiary of TheRealNOW Company. I prefer to stay current on design
           trends and tools. I like reading design blogs and publications,
           attending webinars, and working on personal projects to improve my
           design capabilities. Overall, Busayo is a talented rookie UI designer

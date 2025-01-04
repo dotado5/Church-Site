@@ -19,11 +19,11 @@ const Contact = () => {
     <div className="w-[1300px] h-[700px] mx-auto">
       <div className="flex flex-col items-center mb-[128px] mt-[128px]">
         <h1 className="text-[65px] font-bold text-white text-center">
-          Stay Connected with MOJ- Let's Keep the Conversation Going!
+          Stay Connected with MOJ - Let&apos;s Keep the Conversation Going!
         </h1>
         <p className="text-white text-[18px] text-center">
-          Contact Us for Inquiries, Suggestions, or Just to Say Hello - We'd
-          Love to Hear from You!
+          Contact Us for Inquiries, Suggestions, or Just to Say Hello -
+          We&apos;d Love to Hear from You!
         </p>
       </div>
 
