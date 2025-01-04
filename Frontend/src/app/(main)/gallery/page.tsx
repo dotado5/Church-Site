@@ -10,7 +10,7 @@ const Gallery = () => {
 
   useEffect(() => {
     window.localStorage.setItem("currentAddress", pathName);
-  }, []);
+  }, [pathName]);
 
   return <div>gallery</div>;
 };

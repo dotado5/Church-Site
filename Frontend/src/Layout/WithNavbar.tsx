@@ -1,5 +1,6 @@
 /** @format */
 
+import { Footer } from "@/components/Footer";
 import { PageLinkProps } from "@/components/Link";
 import { Navbar } from "@/components/Navbar";
 import { ComponentType } from "react";
@@ -39,7 +40,7 @@ import { ComponentType } from "react";
 //   };
 // };
 
-const WithNavbar = <Props extends object>(
+const WithNavbarAndFooter = <Props extends object>(
   WrappedComponent: ComponentType<Props>
 ) => {
   const WithNavbarComponent = (props: Props) => {
@@ -47,6 +48,7 @@ const WithNavbar = <Props extends object>(
       <>
         <Navbar />
         <WrappedComponent {...(props as Props)} />
+        <Footer />
       </>
     );
   };
@@ -62,4 +64,4 @@ function getDisplayName(WrappedComponent: ComponentType<any>) {
   return WrappedComponent.displayName || WrappedComponent.name || "Component";
 }
 
-export default WithNavbar;
+export default WithNavbarAndFooter;

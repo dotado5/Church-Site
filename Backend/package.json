@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "src",
+    "ext": "ts",
+    "start": "ts-node ./src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -12,12 +15,17 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongoose": "^8.6.1"
+    "mongodb": "6.9",
+    "mongoose": "^8.6.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^22.5.4",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "nodemon": "^3.1.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }

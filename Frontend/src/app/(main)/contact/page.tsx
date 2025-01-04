@@ -10,7 +10,7 @@ const Contact = () => {
 
   useEffect(() => {
     window.localStorage.setItem("currentAddress", pathName);
-  }, []);
+  }, [pathName]);
 
   return <div>contact</div>;
 };

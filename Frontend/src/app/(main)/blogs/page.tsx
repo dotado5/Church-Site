@@ -10,7 +10,7 @@ const Blogs = () => {
 
   useEffect(() => {
     window.localStorage.setItem("currentAddress", pathName);
-  }, []);
+  }, [pathName]);
 
   return <div>blog</div>;
 };

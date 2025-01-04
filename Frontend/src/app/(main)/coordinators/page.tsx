@@ -10,7 +10,7 @@ const Coordinators = () => {
 
   useEffect(() => {
     window.localStorage.setItem("currentAddress", pathName);
-  }, []);
+  }, [pathName]);
 
   return <div>coordinator</div>;
 };
