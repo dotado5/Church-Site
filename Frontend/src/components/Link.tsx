@@ -3,20 +3,16 @@ import Link from "next/link";
 export interface PageLinkProps {
   src: string;
   content: string;
-  className?: any;
-  icon?: any;
-  onClick?: () => void;
+  className?: string;
 }
 
 export const PageLink: React.FC<PageLinkProps> = ({
   src,
   content,
   className,
-  icon,
-  onClick,
 }) => {
   return (
-    <div className="">
+    <div className={`navLinks text-md rounded-3xl p-3 ${className}`}>
       <Link href={src} className={`${className} `}>
         {content}
       </Link>

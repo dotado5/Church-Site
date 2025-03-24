@@ -4,19 +4,19 @@ import theRealBusayor from "../../../public/images/busayor.png";
 
 const CoordOfMonthBox = () => {
   return (
-    <div className="flex flex-col items-center gap-[48px] mb-[128px]">
+    <div className="flex flex-col items-center gap-[48px] mb-[128px] sm:mt-6 md:mt-6">
       <div className="flex flex-col items-center gap-[16px]">
-        <h1 className="text-white text-[65px] font-bold text-center">
+        <h1 className="text-white text-[65px] sm:text-[36px] md:text-[42px] font-bold text-center">
           Coordinator of the Month
         </h1>
-        <p className="text-[22px] text-white text-center ">
+        <p className="text-[22px] text-white text-center sm:text-base md:text-base ">
           We take pride in celebrating our coordinators which is why we
           celebrate a coordinator every month
         </p>
       </div>
 
-      <div className="flex gap-10">
-        <p className="text-[18px] text-white">
+      <div className="flex gap-10 sm:flex-col-reverse md:flex-col-reverse">
+        <p className="text-[18px] text-white sm:text-base md:text-base">
           Busayo is an ambitious user interface designer. who is passionate
           about creating user-friendly and visually appealing digital products.
           I am on the verge of completing a UX design course, and I’m now eager

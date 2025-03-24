@@ -9,13 +9,11 @@ interface ButtonProps {
 
 export const Button: React.FC<ButtonProps> = ({ content, icon, className }) => {
   return (
-    <div className="">
-      <button
-        className={`flex bg-button p-4 rounded-full items-center gap-2 ${className}`}
-      >
-        {content}
-        {icon && <MdArrowOutward />}
-      </button>
-    </div>
+    <button
+      className={`flex bg-button p-4 rounded-full items-center gap-2 ${className}`}
+    >
+      {content}
+      {icon && <MdArrowOutward />}
+    </button>
   );
 };

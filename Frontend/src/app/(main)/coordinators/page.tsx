@@ -16,7 +16,7 @@ const Coordinators = () => {
   }, [pathName]);
 
   return (
-    <div className="w-[1300px] h-[700px] mx-auto">
+    <div className="w-[1300px] h-[700px] mx-auto sm:w-full md:w-full">
       <CoordOfMonthBox />
       <CoordinatorsSpotlight />
       <Footer />

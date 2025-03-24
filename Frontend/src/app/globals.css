@@ -17,7 +17,7 @@
 }
 
 body {
-  @apply bg-default relative;
+  @apply bg-default relative sm:px-[25px] md:px-[25px];
   /* overflow-hidden; */
 }
 
@@ -36,6 +36,77 @@ body {
   background-repeat: no-repeat;
 }
 
-.article {
-  box-shadow: 0px 20px 40px 0px #00000033;
+.article-box {
+  /* box-shadow: 0px 20px 40px 0px #00000033; */
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Menu Overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Side Menu */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -50%; /* Start off-screen */
+  width: 70%; /* Take up half the screen */
+  height: 100%;
+  background: #a198ac;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  transition: left 0.5s ease;
+}
+
+.side-menu.open {
+  left: 0; /* Slide in */
+}
+
+/* Close Button */
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: -3em;
+  z-index: 9999999;
+  border-radius: 50%;
+  background: white;
+}
+
+/* Menu Items */
+.side-menu ul {
+  @apply flex flex-col gap-3;
+
+  list-style: none;
+  margin: 0;
+  width: 100%;
+  margin-top: 3em;
+  padding: 0px 20px;
+}
+
+.side-menu ul li {
+  padding: 10px 0;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.side-menu ul li:hover {
+  background: #f0f0f0;
 }

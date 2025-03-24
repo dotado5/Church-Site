@@ -6,6 +6,7 @@ import Activities from "@/components/homepageComponents/Activities";
 import { DescriptionBox } from "@/components/homepageComponents/DescriptionBox";
 import Hero from "@/components/homepageComponents/Hero";
 import LatestArticles from "@/components/homepageComponents/LatestArticles";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
@@ -20,8 +21,8 @@ function Home() {
     <main className="flex min-h-screen flex-col">
       <div className="flex flex-col mb-10">
         <Hero />
-        <section className="w-[1300px] h-[700px] mx-auto mt-5">
-          <img src="/images/groupPic.svg" alt="" className="w-full h-full" />
+        <section className="xl:w-[1300px] xl:h-[700px] lg:w-[1300px] lg:h-[700px] mx-auto mt-5">
+          <Image src="/images/groupPic.svg" alt="" className="w-full h-full" />
         </section>
         <DescriptionBox />
         <LatestArticles />
