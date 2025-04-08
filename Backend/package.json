@@ -4,17 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "ts-node-dev src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "src",
     "ext": "ts",
-    "start": "ts-node ./src/app.ts"
+    "start": "ts-node node api/index.js",
+    "build": "npm install && tsc && cp -r src/views api/views"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vercel/node": "^5.1.14",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "firebase": "^11.5.0",
     "mongodb": "6.9",
     "mongoose": "^8.6.1",
     "swagger-jsdoc": "^6.2.8",

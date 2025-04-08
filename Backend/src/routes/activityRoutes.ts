@@ -1,6 +1,10 @@
-import { Router } from 'express';
-import { deleteActivityById, getActivityById, getAllActivities, uploadActivity } from '../controllers/activityController';
-
+import { Router } from "express";
+import {
+  deleteActivityById,
+  getActivityById,
+  getAllActivities,
+  uploadActivity,
+} from "../controllers/ActivityController";
 
 const activityRoutes = Router();
 
@@ -44,7 +48,7 @@ const activityRoutes = Router();
  *                 error:
  *                   type: string
  */
-activityRoutes.post('/uploadActivity', uploadActivity);
+activityRoutes.post("/", uploadActivity);
 
 /**
  * @swagger
@@ -87,7 +91,7 @@ activityRoutes.post('/uploadActivity', uploadActivity);
  *                 error:
  *                   type: string
  */
-activityRoutes.get('/activities', getAllActivities);
+activityRoutes.get("/", getAllActivities);
 
 /**
  * @swagger
@@ -137,7 +141,7 @@ activityRoutes.get('/activities', getAllActivities);
  *                 error:
  *                   type: string
  */
-activityRoutes.get('/activities/:activityId', getActivityById);
+activityRoutes.get("/:activityId", getActivityById);
 
 /**
  * @swagger
@@ -178,6 +182,6 @@ activityRoutes.get('/activities/:activityId', getActivityById);
  *                 error:
  *                   type: string
  */
-activityRoutes.delete('/activities/:activityId', deleteActivityById);
+activityRoutes.delete("/:activityId", deleteActivityById);
 
 export default activityRoutes;

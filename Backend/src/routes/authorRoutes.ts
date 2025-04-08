@@ -1,10 +1,13 @@
-import { Router } from 'express';
-import { createAuthor, deleteAuthorById, getAllAuthors, getAuthorById } from '../controllers/authorController';
-
+import { Router } from "express";
+import {
+  createAuthor,
+  deleteAuthorById,
+  getAllAuthors,
+  getAuthorById,
+} from "../controllers/AuthorController";
 
 const authorRoutes = Router();
 
-// Create Entity A
 /**
  * @swagger
  * /authors:
@@ -38,7 +41,7 @@ const authorRoutes = Router();
  *       500:
  *         description: Internal server error.
  */
-authorRoutes.post('/authors', createAuthor);
+authorRoutes.post("/", createAuthor);
 
 /**
  * @swagger
@@ -77,7 +80,7 @@ authorRoutes.post('/authors', createAuthor);
  *       500:
  *         description: Internal server error.
  */
-authorRoutes.get('/authors', getAllAuthors);
+authorRoutes.get("/", getAllAuthors);
 
 /**
  * @swagger
@@ -122,7 +125,7 @@ authorRoutes.get('/authors', getAllAuthors);
  *       500:
  *         description: Internal server error.
  */
-authorRoutes.get('/authors/:authorId', getAuthorById);
+authorRoutes.get("/:authorId", getAuthorById);
 
 /**
  * @swagger
@@ -157,6 +160,6 @@ authorRoutes.get('/authors/:authorId', getAuthorById);
  *       500:
  *         description: Internal server error.
  */
-authorRoutes.delete('/authors/:authorId', deleteAuthorById);
+authorRoutes.delete("/:authorId", deleteAuthorById);
 
 export default authorRoutes;

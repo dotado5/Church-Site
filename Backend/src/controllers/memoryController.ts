@@ -1,220 +1,179 @@
-import { Request, Response } from 'express';
-import Memory from '../models/memoryModel';
-import { client } from '../database';
-import { ObjectId } from 'mongodb';
-
+import { Request, Response } from "express";
+import Memory from "../models/memoryModel";
+import { client } from "../database";
+import { ObjectId } from "mongodb";
 
 // Create Entity A
 const uploadMemory = async (req: Request, res: Response) => {
-    const { body } = req;
+  const { body } = req;
 
-    const data = {
-        firstName: 'Saint',
-        lastName: 'Saint',
-        profileImage: 'new image',
+  // connect client
+  await client.connect();
+  // Send a ping to confirm a successful connection
+  await client.db("admin").command({ ping: 1 });
+  console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+  try {
+    // Validate request body
+    // if (!title || !content || !author) {
+    //     return res.status(400).send({ message: 'All fields are required' });
+    // }
+
+    const database = client.db("MOJ_Web_Database");
+
+    const memoriesCollection = database.collection("Memories");
+
+    const newMemory = new Memory(body);
+
+    // Upload article to MongoDB
+    const memory = await memoriesCollection.insertOne(newMemory);
+
+    // Find the document
+    const filter = { imageUrl: body.imageUrl };
+    const document = await memoriesCollection.findOne(filter);
+
+    if (document !== null) {
+      res.status(201).send(`Memory successfully uploaded ${memory.insertedId}`);
     }
-
-    // connect client
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-
-    try {
-
-        // Validate request body
-        // if (!title || !content || !author) {
-        //     return res.status(400).send({ message: 'All fields are required' });
-        // }
-
-        // Create a new article document
-
-        // console.log('enter');
-
-        const database = client.db('MOJ_Web_Database');
-
-        const memoriesCollection = database.collection('Memories');
-
-        const newMemory = new Memory(body);
-
-        // Upload article to MongoDB
-        const memory = await memoriesCollection.insertOne(newMemory);
-
-        // Find the document
-        const filter = { "imageUrl": body.imageUrl };
-        const document = await memoriesCollection.findOne(filter);
-
-        // console.log('doc', document);
-
-
-        // Respond with the saved article
-        if (document !== null) {
-            res.status(201).send(`Memory successfully uploaded ${memory.insertedId}`);
-        }
-
-    } catch (err) {
-        res.status(500).send({ error: err });
-    } finally {
-        await client.close();
-    }
+  } catch (err) {
+    res.status(500).send({ error: err });
+  } finally {
+    await client.close();
+  }
 };
 
 const getAllMemories = async (req: Request, res: Response) => {
-    // connect client
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+  // connect client
+  await client.connect();
+  // Send a ping to confirm a successful connection
+  await client.db("admin").command({ ping: 1 });
 
-    try {
-        // const { title, content, author } = req.body;
+  try {
+    const database = client.db("MOJ_Web_Database");
 
-        // Validate request body
-        // if (!title || !content || !author) {
-        //     return res.status(400).send({ message: 'All fields are required' });
-        // }
+    const memoriesCollection = await database
+      .collection("Memories")
+      .find({})
+      .toArray();
 
-        // Create a new article document
-
-
-        const database = client.db('MOJ_Web_Database');
-
-        const memoriesCollection = await database.collection('Memories').find({}).toArray();
-        // console.log('enter', activitiesCollection);
-
-        // Respond with the saved article
-        return res.status(200).send({
-            status: "Success",
-            message: "All memories loaded successfully",
-            data: memoriesCollection, // You need to send the actual data, not the collection object
-        });
-    } catch (err) {
-        res.status(500).send({ error: err });
-    }
+    // Respond with the saved article
+    return res.status(200).send({
+      status: "Success",
+      message: "All memories loaded successfully",
+      data: memoriesCollection, // You need to send the actual data, not the collection object
+    });
+  } catch (err) {
+    res.status(500).send({ error: err });
+  }
 };
 
-// get article by id
 const getMemoryById = async (req: Request, res: Response) => {
+  const { memoryId } = req.params;
 
-    const { memoryId } = req.params;
-    const id = '66ed615010288100e0979621'
+  // connect client
+  await client.connect();
+  // Send a ping to confirm a successful connection
+  await client.db("admin").command({ ping: 1 });
+  console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
-    // connect client
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  try {
+    const database = client.db("MOJ_Web_Database");
 
-    try {
+    const memoriesCollection = database.collection("Memories");
 
-        // Validate request body
-        // if (!title || !content || !author) {
-        //     return res.status(400).send({ message: 'All fields are required' });
-        // }
+    const document = await memoriesCollection.findOne({
+      _id: new ObjectId(memoryId),
+    });
 
-        // Create a new article document
-
-        console.log('enter');
-
-        const database = client.db('MOJ_Web_Database');
-
-        const memoriesCollection = database.collection('Memories');
-
-        const document = await memoriesCollection.findOne({ _id: new ObjectId(memoryId) });
-
-        // console.log('doc', document);
-
-
-        // Respond with the saved article
-        if (document !== null) {
-            return res.status(200).send({
-                status: "Success",
-                message: "Course found",
-                course: document,
-            });
-        }
-
-    } catch (err) {
-        res.status(500).send({ error: err });
-    } finally {
-        await client.close();
+    if (document !== null) {
+      return res.status(200).send({
+        status: "Success",
+        message: "Course found",
+        course: document,
+      });
     }
+  } catch (err) {
+    res.status(500).send({ error: err });
+  } finally {
+    await client.close();
+  }
 };
 
-// get all articles for a particular author
 const getMemoriesByActivityId = async (req: Request, res: Response) => {
+  const { activityId } = req.params;
 
-    const { activityId } = req.params;
-    const id = '66ed615010288100e0979621'
+  // connect client
+  await client.connect();
+  // Send a ping to confirm a successful connection
+  await client.db("admin").command({ ping: 1 });
+  console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
-    // connect client
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  try {
+    const database = client.db("MOJ_Web_Database");
+    const memoriesCollection = await database
+      .collection("Memories")
+      .find({})
+      .toArray();
 
-    try {
+    // Filter articles where authorId matches the specified id
+    const activityMemories = memoriesCollection.filter(
+      (article: any) => article.activityId === activityId
+    );
 
-        // console.log('enter');
-
-        const database = client.db('MOJ_Web_Database');
-        const memoriesCollection = await database.collection('Memories').find({}).toArray();
-
-        // Filter articles where authorId matches the specified id
-        const activityMemories = memoriesCollection.filter((article: any) => article.activityId === activityId);
-
-        // Respond with articles
-        if (activityMemories.length !== 0) {
-            return res.status(200).send({
-                status: "Success",
-                message: "Memories successfully loaded",
-                course: activityMemories,
-            });
-        }
-
-    } catch (err) {
-        res.status(500).send({ error: err });
-    } finally {
-        await client.close();
+    // Respond with articles
+    if (activityMemories.length !== 0) {
+      return res.status(200).send({
+        status: "Success",
+        message: "Memories successfully loaded",
+        course: activityMemories,
+      });
     }
+  } catch (err) {
+    res.status(500).send({ error: err });
+  } finally {
+    await client.close();
+  }
 };
 
 async function deleteMemoryByActivityId(req: Request, res: Response) {
+  const { activityId } = req.params;
 
-    const { activityId } = req.params
-    const id = '66ed615010288100e0979621'
+  // connect client
+  await client.connect();
+  // Send a ping to confirm a successful connection
+  await client.db("admin").command({ ping: 1 });
+  console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
-    // connect client
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  try {
+    const database = client.db("MOJ_Web_Database");
+    const authorsCollection = database.collection("Memories");
 
-    try {
+    const filter = { activityId: activityId };
 
-        const database = client.db('MOJ_Web_Database');
-        const authorsCollection = database.collection('Memories');
+    // Delete multiple documents based on a filter
+    const result = await authorsCollection.deleteMany(filter);
 
-        const filter = { activityId: activityId }
+    console.log(`Deleted ${result.deletedCount} documents`);
 
-        // Delete multiple documents based on a filter
-        const result = await authorsCollection.deleteMany(filter);
-
-        console.log(`Deleted ${result.deletedCount} documents`);
-
-        if (result.deletedCount === 1) {
-            return res.status(200).send({
-                status: "Success",
-                message: `Successfully Deleted memories of this activities.`,
-            });
-        } else {
-            console.log(`No document found with Activity id: ${activityId}`);
-        }
-
-    } catch (error) {
-        console.error("Error occurred while deleting document: ", error);
-    } finally {
-        await client.close();
+    if (result.deletedCount === 1) {
+      return res.status(200).send({
+        status: "Success",
+        message: `Successfully Deleted memories of this activities.`,
+      });
+    } else {
+      console.log(`No document found with Activity id: ${activityId}`);
     }
+  } catch (error) {
+    console.error("Error occurred while deleting document: ", error);
+  } finally {
+    await client.close();
+  }
 }
 
-export { uploadMemory, getAllMemories, getMemoryById, getMemoriesByActivityId, deleteMemoryByActivityId }
+export {
+  uploadMemory,
+  getAllMemories,
+  getMemoryById,
+  getMemoriesByActivityId,
+  deleteMemoryByActivityId,
+};

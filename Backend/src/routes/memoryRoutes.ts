@@ -1,10 +1,14 @@
-import express from 'express';
-import { deleteMemoryByActivityId, getAllMemories, getMemoriesByActivityId, getMemoryById, uploadMemory } from '../controllers/memoryController';
-
+import express from "express";
+import {
+  uploadMemory,
+  getAllMemories,
+  getMemoryById,
+  getMemoriesByActivityId,
+  deleteMemoryByActivityId,
+} from "../controllers/MemoryController";
 
 const memoryRoutes = express.Router();
 
-// Create Memory
 /**
  * @swagger
  * /memories:
@@ -44,9 +48,8 @@ const memoryRoutes = express.Router();
  *       500:
  *         description: Internal server error.
  */
-memoryRoutes.post('/memories', uploadMemory);
+memoryRoutes.post("/", uploadMemory);
 
-// Get all Memories
 /**
  * @swagger
  * /memories:
@@ -84,9 +87,8 @@ memoryRoutes.post('/memories', uploadMemory);
  *       500:
  *         description: Internal server error.
  */
-memoryRoutes.get('/memories', getAllMemories);
+memoryRoutes.get("/", getAllMemories);
 
-// Get all Memory by Id
 /**
  * @swagger
  * /memories/{memoryId}:
@@ -130,9 +132,8 @@ memoryRoutes.get('/memories', getAllMemories);
  *       500:
  *         description: Internal server error.
  */
-memoryRoutes.get('/memories/:memoryId', getMemoryById);
+memoryRoutes.get("/:memoryId", getMemoryById);
 
-// Get all Memory by activity Id
 /**
  * @swagger
  * /memories/activity/{activityId}:
@@ -178,9 +179,8 @@ memoryRoutes.get('/memories/:memoryId', getMemoryById);
  *       500:
  *         description: Internal server error.
  */
-memoryRoutes.get('/memories/activity/:activityId', getMemoriesByActivityId);
+memoryRoutes.get("/activity/:activityId", getMemoriesByActivityId);
 
-// delete memories
 /**
  * @swagger
  * /memories/activity/{activityId}:
@@ -214,6 +214,6 @@ memoryRoutes.get('/memories/activity/:activityId', getMemoriesByActivityId);
  *       500:
  *         description: Internal server error.
  */
-memoryRoutes.delete('/memories/activity/:activityId', deleteMemoryByActivityId);
+memoryRoutes.delete("/activity/:activityId", deleteMemoryByActivityId);
 
 export default memoryRoutes;

@@ -49,36 +49,7 @@ export default function App() {
     <div className="flex h-screen">
       <main className="flex-1 p-6">
         <h1 className="text-3xl font-bold mb-6">Welcome Someone</h1>
-        <div className="w-full">
-          <div className="w-full flex items-center">
-            <p className="w-1/2">
-              It is with great pleasure and a profound sense of responsibility
-              that I stand before you as the coordinator of this esteemed teens'
-              church. Here at MOJ, we recognize the unique qualities and
-              aspirations of each individual, and our mission is to provide a
-              platform for spiritual growth, intellectual development, and
-              meaningful connections. As the coordinator, my primary goal is to
-              ensure that every member of the MOJ family feels welcomed, valued,
-              and supported in their journey of faith. We understand the
-              challenges that teenagers face in today's rapidly changing world,
-              and we are dedicated to creating an environment that addresses
-              these challenges with wisdom, compassion, and relevance. I
-              encourage each of you to actively participate in the various
-              programs, discussions, and activities that MOJ offers. Your
-              engagement is not only welcomed but crucial to the vibrancy and
-              success of our community. Feel free to reach out to me or our
-              dedicated team with any questions, suggestions, or concerns you
-              may have. Welcome to Minds of Josiah, where faith is cultivated,
-              minds are enriched, and community thrives.
-            </p>
-            <img
-              src="/images/pastor.svg"
-              alt=""
-              className="w-1/2 h-full object-contain"
-            />
-          </div>
-          <div></div>
-        </div>
+        <div className="w-full"></div>
       </main>
     </div>
   );

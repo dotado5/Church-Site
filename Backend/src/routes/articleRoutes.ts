@@ -1,12 +1,14 @@
-import express from 'express';
-import { createArticle, deleteArticleById, getAllArticles, getArticleById, getArticlesByAuthorId, hello } from '../controllers/articleControllers';
-
+import express from "express";
+import {
+  createArticle,
+  deleteArticleById,
+  getAllArticles,
+  getArticleById,
+  getArticlesByAuthorId,
+} from "../controllers/ArticleControllers";
 
 const articleRoutes = express.Router();
 
-articleRoutes.get('/hello', hello)
-
-// Create Entity A
 /**
  * @swagger
  * /articles:
@@ -47,10 +49,9 @@ articleRoutes.get('/hello', hello)
  *       500:
  *         description: Internal server error.
  */
-articleRoutes.post('/articles', createArticle);
+articleRoutes.post("/", createArticle);
 
-// Get all Entity A
-/**
+/*
  * @swagger
  * /articles:
  *   get:
@@ -90,9 +91,8 @@ articleRoutes.post('/articles', createArticle);
  *       500:
  *         description: Internal server error.
  */
-articleRoutes.get('/articles', getAllArticles);
+articleRoutes.get("/", getAllArticles);
 
-// Get all Entity A
 /**
  * @swagger
  * /articles/{articleId}:
@@ -139,9 +139,8 @@ articleRoutes.get('/articles', getAllArticles);
  *       500:
  *         description: Internal server error.
  */
-articleRoutes.get('/articles/:articleId', getArticleById);
+articleRoutes.get("/:articleId", getArticleById);
 
-// Get all Entity A
 /**
  * @swagger
  * /articles/author/{authorId}:
@@ -190,9 +189,8 @@ articleRoutes.get('/articles/:articleId', getArticleById);
  *       500:
  *         description: Internal server error.
  */
-articleRoutes.get('/articles/author/:authorId', getArticlesByAuthorId);
+articleRoutes.get("/author/:authorId", getArticlesByAuthorId);
 
-// delete article
 /**
  * @swagger
  * /articles/{articleId}:
@@ -226,6 +224,6 @@ articleRoutes.get('/articles/author/:authorId', getArticlesByAuthorId);
  *       500:
  *         description: Internal server error.
  */
-articleRoutes.delete('/articles/:articleId', deleteArticleById);
+articleRoutes.delete("/articles/:articleId", deleteArticleById);
 
 export default articleRoutes;
