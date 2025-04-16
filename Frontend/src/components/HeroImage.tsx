@@ -8,7 +8,7 @@ export interface HeroImageProps {
 
 const HeroImage: React.FC<HeroImageProps> = ({ src, className }) => {
   return (
-    <Image
+    <img
       src={src}
       alt=""
       className={`${className} sm:w-[32px] sm:h-[32px] md:w-[40px] md:h-[40px]`}

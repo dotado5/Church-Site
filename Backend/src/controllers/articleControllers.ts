@@ -21,17 +21,6 @@ const createArticle = async (req: Request, res: Response) => {
   console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
   try {
-    // const { title, content, author } = req.body;
-
-    // Validate request body
-    // if (!title || !content || !author) {
-    //     return res.status(400).send({ message: 'All fields are required' });
-    // }
-
-    // Create a new article document
-
-    // console.log('enter');
-
     const database = client.db("MOJ_Web_Database");
 
     const articlesCollections = database.collection("Articles");
@@ -44,8 +33,6 @@ const createArticle = async (req: Request, res: Response) => {
     // Find the document
     const filter = { title: body.title };
     const document = await articlesCollections.findOne(filter);
-
-    // console.log('doc', document);
 
     // Respond with the saved article
     if (document !== null) {
@@ -97,7 +84,6 @@ const getAllArticles = async (req: Request, res: Response) => {
 
 const getArticleById = async (req: Request, res: Response) => {
   const { articleId } = req.params;
-  const id = "66ed615010288100e0979621";
 
   // connect client
   await client.connect();
@@ -106,15 +92,6 @@ const getArticleById = async (req: Request, res: Response) => {
   console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
   try {
-    // Validate request body
-    // if (!title || !content || !author) {
-    //     return res.status(400).send({ message: 'All fields are required' });
-    // }
-
-    // Create a new article document
-
-    console.log("enter");
-
     const database = client.db("MOJ_Web_Database");
 
     const articlesCollections = database.collection("Articles");
@@ -142,7 +119,6 @@ const getArticleById = async (req: Request, res: Response) => {
 
 const getArticlesByAuthorId = async (req: Request, res: Response) => {
   const { authorId } = req.params;
-  const id = "66ed615010288100e0979621";
 
   // connect client
   await client.connect();

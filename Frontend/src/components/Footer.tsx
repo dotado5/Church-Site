@@ -7,13 +7,13 @@ export const Footer: React.FC = () => {
     <div className="flex flex-col items-center gap-3 mt-5">
       <div className="flex gap-[8px]">
         <Link href={""}>
-          <Image src={"/images/instagram.png"} alt="" />
+          <img src={"/images/instagram.png"} alt="" />
         </Link>
         <Link href={""}>
-          <Image src="/images/twitter.png" alt="" />
+          <img src="/imgs/twitter.png" alt="" />
         </Link>
         <Link href={""}>
-          <Image src="/images/youtube.png" alt="" />
+          <img src="/images/youtube.png" alt="" />
         </Link>
       </div>
       <h3 className="text-white xl:text-[18px] lg:text-[18px] sm:text-sm md:text-sm">

@@ -34,6 +34,10 @@ const articleRoutes = express.Router();
  *               text:
  *                 type: string
  *                 example: "This is the text content of the article."
+ *               date:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2024-10-11T00:00:00Z"
  *               readTime:
  *                 type: string
  *                 format: date-time

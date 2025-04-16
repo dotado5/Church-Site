@@ -24,7 +24,7 @@ export const Article: React.FC<ArticleProps> = ({
     <>
       {homePage ? (
         <div className=" bg-default xl:w-[300px] lg:w-[300px] xl:h-[450px] lg:h-[450px] text-white article-box">
-          <Image src={src} alt="" className="w-full" />
+          <img src={src} alt="" className="w-full" />
           <h6 className="text-button mt-4 xl:text-[20px] lg:text-[20px] sm:text-base md:text-base sm:px-2 md:px-2">
             {title}
           </h6>
@@ -36,7 +36,7 @@ export const Article: React.FC<ArticleProps> = ({
           </p>
           <div className="flex gap-2 sm:gap-1 md:gap-1 sm:flex-col md:flex-col mt-3 sm:px-2 md:px-2">
             <span className="flex gap-2 sm:text-[10px] md:text-[10px] sm:items-center md:items-center">
-              <Image
+              <img
                 src="/images/dot.svg"
                 alt=""
                 className="sm:w-[5px] sm:h-[5px]"
@@ -44,7 +44,7 @@ export const Article: React.FC<ArticleProps> = ({
               {length}
             </span>
             <span className="flex gap-2 sm:text-[10px] md:text-[10px] sm:items-center md:items-center">
-              <Image
+              <img
                 src="/images/dot.svg"
                 alt=""
                 className="sm:w-[5px] sm:h-[5px]"
@@ -55,7 +55,7 @@ export const Article: React.FC<ArticleProps> = ({
         </div>
       ) : (
         <div className=" bg-default xl:w-[640px] xl:h-[460px] lg:w-[640px] lg:h-[460px] text-white article-box">
-          <Image
+          <img
             src={src}
             alt=""
             className="xl:w-[640px] xl:h-[238px] lg:w-[640px] lg:h-[238px] h-[150px] object-cover"

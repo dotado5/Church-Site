@@ -10,15 +10,15 @@ const ContactForm = () => {
     <div className="flex w-full gap-[119px] sm:gap-8 md:gap-8 items-center sm:items-start md:items-start mt-[128px] sm:mt-[4em] md:mt-[4em] mb-[130px] sm:mb-[4em] md:mb-[4em] sm:flex-col-reverse md:flex-col-reverse">
       <div className="w-[280px] flex flex-col gap-[16px]">
         <p className="flex items-center text-white text-[18px] gap-[8px] sm:text-base md:text-base">
-          <Image src={location_icon} alt={""} />
+          <Image src={location_icon} alt={""} width={100} />
           1, Church Street, off Oluwu, Ikeja Lagos State, Nigeria.
         </p>
         <p className="flex items-center text-white text-[18px] gap-[8px] sm:text-base md:text-base">
-          <Image src={call_icon} alt={""} />
+          <Image src={call_icon} alt={""} width={100} />
           +234 706 793 5319
         </p>
         <p className="flex items-center text-white text-[18px] gap-[8px] sm:text-base md:text-base">
-          <Image src={mail_icon} alt={""} />
+          <Image src={mail_icon} alt={""} width={100} />
           fatokivictor2@gmail.com
         </p>
       </div>

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { PageLink, PageLinkProps } from "./Link";
 import { usePathname } from "next/navigation";
 import { IoCloseSharp } from "react-icons/io5";
-import Image from "next/image";
 
 export const Navbar = () => {
   const pathName = usePathname();
@@ -42,7 +41,7 @@ export const Navbar = () => {
 
   return (
     <header className="flex items-center mt-5 sm:w-full md:w-full">
-      <Image
+      <img
         src="/images/logo.svg"
         alt="icon"
         className="ml-7 sm:hidden md:hidden"
@@ -64,8 +63,8 @@ export const Navbar = () => {
 
       {/* mobile navbar */}
       <nav className="xl:hidden lg:hidden sm:w-full md:w-full sm:mx-auto flex items-center justify-between bg-[#A198AC] rounded-full p-2">
-        <Image src="/images/mobile_icon.png" alt="" />
-        <Image
+        <img src="/images/mobile_icon.png" alt="" />
+        <img
           src="/images/hamburger.png"
           alt=""
           onClick={() => setIsOpen(true)}
