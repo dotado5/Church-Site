@@ -1,9 +1,9 @@
 async function fetchData(fetcFunc: () => any) {
   const fetchPromise = fetcFunc();
 
-  const [fetchesponse] = await Promise.all([fetchPromise, ,]);
+  const [fetchResponse] = await Promise.all([fetchPromise]);
 
-  return fetchesponse;
+  return fetchResponse;
 }
 
 export { fetchData };

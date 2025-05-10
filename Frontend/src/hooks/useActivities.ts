@@ -16,4 +16,4 @@ const useActivities = () => {
   return { getAllActivities };
 };
 
-export { useActivities };
+export default useActivities;

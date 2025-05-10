@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import theRealBusayor from "../../../public/s/busayor.png";
+import theRealBusayor from "../../../public/images/busayor.png";
 
 const CoordOfMonthBox = () => {
   return (

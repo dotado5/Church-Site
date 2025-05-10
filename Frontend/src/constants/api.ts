@@ -1,8 +1,10 @@
-const API_BASE_URL = "https://mojbackend.vercel.app";
+const API_BASE_URL = "https://moj-backend.onrender.com";
 
 const ENDPOINTS = {
-  GET_ALL_ARTICLES: "/articles",
-  GET_ALL_ACTIVITIES: "/activities",
+  GET_ALL_ARTICLES: "article",
+  GET_ALL_ACTIVITIES: "activity",
+  GET_ALL_AUTHORS: "author",
+  GET_ALL_MEMORIES: "memory",
 };
 
 export { API_BASE_URL, ENDPOINTS };

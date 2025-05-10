@@ -6,10 +6,10 @@ import Activities from "@/components/homepageComponents/Activities";
 import { DescriptionBox } from "@/components/homepageComponents/DescriptionBox";
 import Hero from "@/components/homepageComponents/Hero";
 import LatestArticles from "@/components/homepageComponents/LatestArticles";
-import { useActivities } from "@/hooks/useActivities";
+import useActivities from "@/hooks/useActivities";
 import { useArticles } from "@/hooks/useArticles";
+import { Activity, Article } from "@/types/dataTypes";
 import { fetchData } from "@/utils/fetchData";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -17,27 +17,26 @@ function Home() {
   const pathName = usePathname();
   const { getAllArticles } = useArticles();
   const { getAllActivities } = useActivities();
-  const [activities, setActivities] = useState<any[]>();
-  const [articles, setArticles] = useState<any[]>();
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    window.localStorage.setItem("currentAddress", pathName);
-
     fetchPageData();
   }, [pathName]);
 
   async function fetchPageData() {
-    // const articlesPromise = getAllArticles();
-    // const activitiesPromise = getAllActivities();
-
-    // const [userResponse, certResponse] = await Promise.all([
-    //   articlesPromise,
-    //   activitiesPromise,
-    // ]);
-
     const activitiesResponse = await fetchData(getAllActivities);
+    const articlesResponse = await fetchData(getAllArticles);
 
-    console.log(activitiesResponse);
+    if (activitiesResponse.status === 200) {
+      setActivities(activitiesResponse.data.data as Activity[]);
+    }
+
+    if (articlesResponse.status === 200) {
+      setArticles(articlesResponse.data.data as Article[]);
+    }
+
+    console.log(articlesResponse);
   }
 
   return (
@@ -49,7 +48,7 @@ function Home() {
         </section>
         <DescriptionBox />
         <LatestArticles />
-        <Activities />
+        <Activities activities={activities} />
         <Footer />
       </div>
     </main>

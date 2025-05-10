@@ -1,9 +1,9 @@
 import { Router } from "express";
 import {
-  deleteActivityById,
-  getActivityById,
-  getAllActivities,
   uploadActivity,
+  getAllActivities,
+  getActivityById,
+  deleteActivityById,
 } from "../controllers/ActivityController";
 
 const activityRoutes = Router();

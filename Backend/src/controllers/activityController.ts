@@ -45,34 +45,21 @@ const uploadActivity = async (req: Request, res: Response) => {
 };
 
 const getAllActivities = async (req: Request, res: Response) => {
-  // connect client
   await client.connect();
-  // Send a ping to confirm a successful connection
   await client.db("admin").command({ ping: 1 });
 
   try {
-    // const { title, content, author } = req.body;
-
-    // Validate request body
-    // if (!title || !content || !author) {
-    //     return res.status(400).send({ message: 'All fields are required' });
-    // }
-
-    // Create a new article document
-
     const database = client.db("MOJ_Web_Database");
 
     const activitiesCollection = await database
       .collection("Activities")
       .find({})
       .toArray();
-    // console.log('enter', activitiesCollection);
 
-    // Respond with the saved article
     return res.status(200).send({
       status: "Success",
       message: "All activities loaded successfully",
-      data: activitiesCollection, // You need to send the actual data, not the collection object
+      data: activitiesCollection,
     });
   } catch (err) {
     res.status(500).send({ error: err });
