@@ -15,7 +15,7 @@ const CoordinatorsBox: React.FC<CoordinatorsBoxProps> = ({
   position,
 }) => {
   return (
-    <div className="relative h-[440px] sm:h-[250px] md:h-[250px]">
+    <div className="relative h-[440px] sm:h-[250px] md:h-[250px] w-full">
       <img src={img} alt={""} className="object-cover" />
       <div className="absolute bottom-[0px] z-[999] bg-black w-full py-[16px] pl-[8px]">
         <h4 className="text-white text-[20px] sm:text-base md:text-base font-medium">

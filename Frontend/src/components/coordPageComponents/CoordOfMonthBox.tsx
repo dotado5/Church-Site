@@ -1,6 +1,4 @@
-import Image from "next/image";
 import React from "react";
-import theRealBusayor from "../../../public/images/busayor.png";
 
 const CoordOfMonthBox = () => {
   return (
@@ -49,7 +47,7 @@ const CoordOfMonthBox = () => {
           any design team, and his willingness to learn and grow ensures that
           he’s always striving to improve and innovate.
         </p>
-        <Image src={theRealBusayor} alt={""} width={100} />
+        <img src={"/images/busayor.png"} alt={""} />
       </div>
     </div>
   );

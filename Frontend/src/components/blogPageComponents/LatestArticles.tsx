@@ -10,7 +10,7 @@ const LatestArticles = () => {
       <div className="grid grid-cols-2 w-full gap-[20px] gap-y-[40px]">
         {articles.map((article, index) => (
           <Article
-            src={frame}
+            src={"/images/Frame.png"}
             title={article.title}
             author={article.author}
             description={article.description}

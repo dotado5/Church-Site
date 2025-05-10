@@ -13,7 +13,7 @@ const dummyCoords: CoordinatorsBoxProps[] = [
 
 const CoordinatorsSpotlight = () => {
   return (
-    <div className="flex flex-col items-center gap-[48px] mb-[128px]">
+    <div className="flex flex-col items-center gap-[48px] mb-[128px] w-full">
       <div className="flex flex-col items-center gap-[16px]">
         <h1 className="text-white text-[65px] sm:text-[36px] md:text-[42px] font-bold text-center">
           Coordinators Spotlight
@@ -24,10 +24,10 @@ const CoordinatorsSpotlight = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-[20px] sm:grid-cols-2 md:grid-cols-2">
+      <div className="grid grid-cols-3 gap-[20px] sm:grid-cols-2 md:grid-cols-2 w-full">
         {dummyCoords.map((coord, index) => (
           <CoordinatorsBox
-            img={coord.img}
+            img={"/images/paul_smith.png"}
             name={coord.name}
             position={coord.position}
             number={coord.number}
