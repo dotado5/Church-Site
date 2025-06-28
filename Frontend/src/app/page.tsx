@@ -12,6 +12,7 @@ import { Activity, Article } from "@/types/dataTypes";
 import { fetchData } from "@/utils/fetchData";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 
 function Home() {
   const pathName = usePathname();
@@ -28,15 +29,13 @@ function Home() {
     const activitiesResponse = await fetchData(getAllActivities);
     const articlesResponse = await fetchData(getAllArticles);
 
-    if (activitiesResponse.status === 200) {
+    if (activitiesResponse && activitiesResponse.status === 200) {
       setActivities(activitiesResponse.data.data as Activity[]);
     }
 
-    if (articlesResponse.status === 200) {
+    if (articlesResponse && articlesResponse.status === 200) {
       setArticles(articlesResponse.data.data as Article[]);
     }
-
-    console.log(articlesResponse);
   }
 
   return (
@@ -44,10 +43,20 @@ function Home() {
       <div className="flex flex-col mb-10">
         <Hero />
         <section className="xl:w-[1300px] xl:h-[700px] lg:w-[1300px] lg:h-[700px] mx-auto mt-5">
-          <img src="/images/groupPic.svg" alt="" className="w-full h-full" />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.5,
+              ease: [0, 0.71, 0.2, 1.01],
+            }}
+          >
+            <img src="/images/groupPic.svg" alt="" className="w-full h-full" />
+          </motion.div>
         </section>
         <DescriptionBox />
-        <LatestArticles />
+        <LatestArticles fetchArticles={articles} />
         <Activities activities={activities} />
         <Footer />
       </div>

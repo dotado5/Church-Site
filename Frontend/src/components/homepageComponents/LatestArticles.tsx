@@ -1,5 +1,7 @@
 import React from "react";
 import { Article, ArticleProps } from "../Article";
+import { Article as ArticleType } from "@/types/dataTypes";
+import Loader from "../Loader/Loader";
 
 export const articles: ArticleProps[] = [
   {
@@ -76,7 +78,15 @@ export const articles: ArticleProps[] = [
   },
 ];
 
-const LatestArticles: React.FC = () => {
+const LatestArticles = ({
+  fetchArticles,
+}: {
+  fetchArticles: ArticleType[];
+}) => {
+  if (fetchArticles.length === 0) {
+    return <Loader text={""} textColor={"mt-[2em]"} />;
+  }
+
   return (
     <div className="mx-auto flex flex-col items-center mt-[3em]">
       <h6 className="text-button xl:text-[20px] lg:text-[20px] font-medium sm:text-base md:text-base">
@@ -86,12 +96,12 @@ const LatestArticles: React.FC = () => {
         Latest Articles
       </h1>
       <div className="grid xl:grid-cols-4 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-2 xl:gap-4 lg:gap-4 sm:gap-2 md:gap-2 ">
-        {articles.map((article, index) => (
+        {articles.slice(0, 4).map((article, index) => (
           <Article
-            src={article.src}
-            title={article.title}
+            src={fetchArticles[index].displayImage}
+            title={fetchArticles[index].title}
             author={article.author}
-            description={article.description}
+            description={fetchArticles[index].text.slice(0, 100)}
             length={article.length}
             dateUploaded={article.dateUploaded}
             key={index}

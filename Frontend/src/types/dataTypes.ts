@@ -3,7 +3,7 @@ interface Article {
   title: string;
   authorId: string;
   text: string;
-  date: Date;
+  date: string;
   readTime: Date;
 }
 
@@ -14,4 +14,12 @@ interface Activity {
   description: string;
 }
 
-export type { Activity, Article };
+interface Coordinator {
+  name: string;
+  occupation: string;
+  phone_number: string;
+  image_url: any;
+  about: string;
+}
+
+export type { Activity, Article, Coordinator };

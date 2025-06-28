@@ -2,6 +2,8 @@ import React from "react";
 import { PageHeader } from "../PageHeader";
 import { Button } from "../Button";
 import HeroImage, { HeroImageProps } from "../HeroImage";
+import { AnimatePresence } from "motion/react";
+import * as motion from "motion/react-client";
 
 const Hero: React.FC = () => {
   const images: HeroImageProps[] = [
@@ -33,20 +35,33 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <div className="relative flex flex-col items-center gap-5">
-      {images.map((image, index) => (
-        <HeroImage src={image.src} className={image.className} key={index} />
-      ))}
-      <PageHeader
-        title={" Minds Of Josiah: Where Teens Sparkle and Faith Shines!"}
-        description={
-          " At MOJ, we believe in the unique potential that resides within every teenager. MOJ is not just a church—it's a community where teens soar to new heights. Our mission is to create an environment where teens can thrive intellectually, emotionally, and spiritually."
-        }
-        yellowText={false}
-        className="mt-[6em]"
-      />
-      <Button content={"Become a Member"} icon={true} />
-    </div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 10, opacity: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <div className="relative flex flex-col items-center gap-5">
+          {images.map((image, index) => (
+            <HeroImage
+              src={image.src}
+              className={image.className}
+              key={index}
+            />
+          ))}
+          <PageHeader
+            title={" Minds Of Josiah: Where Teens Sparkle and Faith Shines!"}
+            description={
+              " At MOJ, we believe in the unique potential that resides within every teenager. MOJ is not just a church—it's a community where teens soar to new heights. Our mission is to create an environment where teens can thrive intellectually, emotionally, and spiritually."
+            }
+            yellowText={false}
+            className="mt-[6em]"
+          />
+          <Button content={"Become a Member"} icon={true} />
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
