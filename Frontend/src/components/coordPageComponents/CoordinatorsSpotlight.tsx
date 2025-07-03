@@ -1,17 +1,12 @@
 import React from "react";
-import smith from "../../../public/images/paul_smith.png";
-import CoordinatorsBox, { CoordinatorsBoxProps } from "../CoordinatorsBox";
+import CoordinatorsBox from "../CoordinatorsBox";
+import { Coordinator } from "@/types/dataTypes";
 
-const dummyCoords: CoordinatorsBoxProps[] = [
-  { img: smith, name: "Paul Smith", position: "CEO", number: "08033785061" },
-  { img: smith, name: "Paul Smith", position: "CEO", number: "08033785061" },
-  { img: smith, name: "Paul Smith", position: "CEO", number: "08033785061" },
-  { img: smith, name: "Paul Smith", position: "CEO", number: "08033785061" },
-  { img: smith, name: "Paul Smith", position: "CEO", number: "08033785061" },
-  { img: smith, name: "Paul Smith", position: "CEO", number: "08033785061" },
-];
+interface CoordinatorsSpotlightProps {
+  coordinators: Coordinator[];
+}
 
-const CoordinatorsSpotlight = () => {
+const CoordinatorsSpotlight: React.FC<CoordinatorsSpotlightProps> = ({ coordinators }) => {
   return (
     <div className="flex flex-col items-center gap-[48px] mb-[128px] w-full">
       <div className="flex flex-col items-center gap-[16px]">
@@ -24,17 +19,25 @@ const CoordinatorsSpotlight = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-[20px] sm:grid-cols-2 md:grid-cols-2 w-full">
-        {dummyCoords.map((coord, index) => (
-          <CoordinatorsBox
-            img={"/images/paul_smith.png"}
-            name={coord.name}
-            position={coord.position}
-            number={coord.number}
-            key={index}
-          />
-        ))}
-      </div>
+      {coordinators.length > 0 ? (
+        <div className="grid grid-cols-3 gap-[20px] sm:grid-cols-2 md:grid-cols-2 w-full">
+          {coordinators.map((coordinator, index) => (
+            <CoordinatorsBox
+              img={coordinator.image_url}
+              name={coordinator.name}
+              position={coordinator.occupation}
+              number={coordinator.phone_number}
+              key={coordinator._id || index}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-[16px]">
+          <p className="text-white text-[18px] text-center sm:text-base md:text-base">
+            No coordinators available in the spotlight at the moment.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

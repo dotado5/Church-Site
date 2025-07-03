@@ -4,47 +4,54 @@ import WithNavbar from "@/Layout/WithNavbar";
 import { Footer } from "@/components/Footer";
 import LatestArticles from "@/components/blogPageComponents/LatestArticles";
 import { useArticles } from "@/hooks/useArticles";
-import Http from "@/services/Http";
-import { Article } from "@/types/dataTypes";
+import { ArticleWithAuthor, ArticlesPagination } from "@/types/dataTypes";
 import { fetchData } from "@/utils/fetchData";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-
-// const region = process.env.AWS_REGION;
-// const bucket_name = process.env.AWS_S3_BUCKET;
-// const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-// const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-
-// Setup S3 client
-// const s3 = new S3Client({
-//   region: region,
-//   credentials: {
-//     accessKeyId: accessKeyId ?? "",
-//     secretAccessKey: secretAccessKey ?? "",
-//   },
-// });
+import Loader from "@/components/Loader/Loader";
 
 const Blogs = () => {
-  const { getAllArticles } = useArticles();
-  const [articles, setArticles] = useState<Article[]>([]);
+  const { getAllArticlesWithAuthors } = useArticles();
+  const [articles, setArticles] = useState<ArticleWithAuthor[]>([]);
+  const [pagination, setPagination] = useState<ArticlesPagination | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    fetchArticles();
-  }, []);
+    fetchArticles(currentPage);
+  }, [currentPage]);
 
-  async function fetchArticles() {
-    const articlesResponse = await fetchData(getAllArticles);
+  async function fetchArticles(page: number = 1) {
+    try {
+      setLoading(true);
+      const articlesResponse = await fetchData(() => getAllArticlesWithAuthors(page, 12));
 
-    if (articlesResponse.status === 200) {
-      setArticles(articlesResponse.data.data as Article[]);
+      if (articlesResponse?.status === 200) {
+        setArticles(articlesResponse.data.data as ArticleWithAuthor[]);
+        setPagination(articlesResponse.data.pagination as ArticlesPagination);
+      }
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    } finally {
+      setLoading(false);
     }
   }
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  if (loading) {
+    return (
+      <div className="w-[1300px] h-[700px] sm:w-full md:w-full mx-auto flex flex-col items-center justify-center">
+        <Loader text="Loading articles..." textColor="my-[10%]" />
+      </div>
+    );
+  }
+
   return (
-    <div className="w-[1300px] h-[700px] sm:w-full md:w-full mx-auto flex flex-col items-center mt-[100px] sm:mt-6 md:mt-6">
+    <div className="w-[1300px] h-auto sm:w-full md:w-full mx-auto flex flex-col items-center mt-[100px] sm:mt-6 md:mt-6">
       <div className="flex flex-col items-center mb-[128px]">
         <h1 className="text-[65px] font-bold text-white text-center sm:text-[36px] md:text-[42px]">
           Mojites Talk Corner: Safe Space to Share, Learn, and Grow Together
@@ -55,7 +62,12 @@ const Blogs = () => {
         </p>
       </div>
 
-      <LatestArticles fetchArticles={articles} />
+      <LatestArticles 
+        articles={articles} 
+        pagination={pagination}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
       <Footer />
     </div>
   );

@@ -6,14 +6,23 @@ const useCoordinator = () => {
     const url = `${API_BASE_URL}/${ENDPOINTS.COORDINATOR}`;
     try {
       const res = await Http.get(url);
-
       return res;
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { getAllCoordinators };
+  const getFeaturedCoordinator = async () => {
+    const url = `${API_BASE_URL}/${ENDPOINTS.FEATURED_COORDINATOR}`;
+    try {
+      const res = await Http.get(url);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { getAllCoordinators, getFeaturedCoordinator };
 };
 
 export default useCoordinator;

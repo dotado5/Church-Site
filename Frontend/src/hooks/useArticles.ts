@@ -6,14 +6,33 @@ const useArticles = () => {
     const url = `${API_BASE_URL}/${ENDPOINTS.GET_ALL_ARTICLES}`;
     try {
       const res = await Http.get(url);
-
       return res;
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { getAllArticles };
+  const getAllArticlesWithAuthors = async (page: number = 1, limit: number = 10) => {
+    const url = `${API_BASE_URL}/${ENDPOINTS.ARTICLES_WITH_AUTHORS}?page=${page}&limit=${limit}`;
+    try {
+      const res = await Http.get(url);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getArticleByIdWithAuthor = async (id: string) => {
+    const url = `${API_BASE_URL}/${ENDPOINTS.ARTICLE_WITH_AUTHOR}/${id}/with-author`;
+    try {
+      const res = await Http.get(url);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { getAllArticles, getAllArticlesWithAuthors, getArticleByIdWithAuthor };
 };
 
 export { useArticles };

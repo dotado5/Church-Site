@@ -7,10 +7,13 @@ const ENDPOINTS = {
   GET_ALL_AUTHORS: "author",
   GET_ALL_MEMORIES: "memory",
   COORDINATOR: "coordinator",
+  FEATURED_COORDINATOR: "coordinator/featured",
   PASTOR: "pastor",
   ACTIVE_PASTOR: "pastor/active",
   PASTOR_CORNER: "pastor-corner",
   LATEST_PASTOR_CORNER: "pastor-corner/latest",
+  ARTICLES_WITH_AUTHORS: "article/with-authors",
+  ARTICLE_WITH_AUTHOR: "article",
 };
 
 export { API_BASE_URL, ENDPOINTS };

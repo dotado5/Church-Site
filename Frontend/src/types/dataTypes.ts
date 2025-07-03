@@ -1,3 +1,10 @@
+interface Activity {
+  _id: string;
+  name: string;
+  date: string;
+  description: string;
+}
+
 interface Article {
   displayImage: string;
   title: string;
@@ -7,19 +14,52 @@ interface Article {
   readTime: Date;
 }
 
-interface Activity {
+interface Author {
   _id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  profileImage: string;
+}
+
+interface ArticleWithAuthor {
+  _id: string;
+  displayImage: string;
+  title: string;
+  authorId: string;
+  author: Author | null;
+  text: string;
+  excerpt: string;
   date: string;
-  description: string;
+  formattedDate: string;
+  timeAgo: string;
+  readTime: Date;
+  estimatedReadTime: string;
+}
+
+interface ArticlesPagination {
+  currentPage: number;
+  totalPages: number;
+  totalArticles: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
+interface ArticlesWithAuthorsResponse {
+  status: string;
+  message: string;
+  data: ArticleWithAuthor[];
+  pagination: ArticlesPagination;
 }
 
 interface Coordinator {
+  _id?: string;
   name: string;
   occupation: string;
   phone_number: string;
   image_url: any;
   about: string;
+  isFeatured: boolean;
 }
 
 interface Pastor {
@@ -45,4 +85,14 @@ interface PastorCorner {
   updatedAt: string;
 }
 
-export type { Activity, Article, Coordinator, Pastor, PastorCorner };
+export type { 
+  Activity, 
+  Article, 
+  Author,
+  ArticleWithAuthor,
+  ArticlesPagination,
+  ArticlesWithAuthorsResponse,
+  Coordinator, 
+  Pastor, 
+  PastorCorner 
+};
