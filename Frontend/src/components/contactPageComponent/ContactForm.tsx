@@ -117,7 +117,7 @@ const ContactForm = () => {
       <div className="w-[280px] flex flex-col gap-[16px]">
         <p className="flex items-center text-white text-[18px] gap-[8px] sm:text-base md:text-base">
           <Image src={location_icon} alt="Location" width={100} />
-          1, Church Street, off Oluwu, Ikeja Lagos State, Nigeria.
+          1 Church Street, Olowu Ikeja, Lagos, Nigeria.
         </p>
         <p className="flex items-center text-white text-[18px] gap-[8px] sm:text-base md:text-base">
           <Image src={call_icon} alt="Phone" width={100} />
