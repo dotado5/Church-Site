@@ -85,6 +85,15 @@ interface PastorCorner {
   updatedAt: string;
 }
 
+interface Memory {
+  _id: string;
+  imageUrl: string;
+  height: number;
+  width: number;
+  imgType: string;
+  activityId: string;
+}
+
 export type { 
   Activity, 
   Article, 
@@ -94,5 +103,6 @@ export type {
   ArticlesWithAuthorsResponse,
   Coordinator, 
   Pastor, 
-  PastorCorner 
+  PastorCorner,
+  Memory
 };
