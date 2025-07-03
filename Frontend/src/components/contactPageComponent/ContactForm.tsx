@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
+import emailjs from '@emailjs/browser';
 import location_icon from "../../../public/images/location_icon.png";
 import call_icon from "../../../public/images/call_icon.png";
 import mail_icon from "../../../public/images/mail_icon.png";
@@ -83,15 +84,47 @@ const ContactForm = () => {
       return;
     }
 
+    // Check if EmailJS is configured
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
+
+    if (!serviceId || !templateId || !userId || 
+        serviceId === 'your_service_id_here' || 
+        templateId === 'your_template_id_here' || 
+        userId === 'your_user_id_here') {
+      console.error('EmailJS is not configured. Please check your environment variables.');
+      setSubmitStatus('error');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      // Simulate API call - replace with actual API endpoint
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // For now, just log the form data
-      console.log('Form submitted:', formData);
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          submitted_at: new Date().toLocaleString('en-US', {
+            timeZone: 'Africa/Lagos',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }),
+          reply_to: formData.email
+        },
+        userId
+      );
+
+      console.log('Email sent successfully:', result.text);
       
       setSubmitStatus('success');
       setFormData({
@@ -104,8 +137,20 @@ const ContactForm = () => {
       // Reset success message after 5 seconds
       setTimeout(() => setSubmitStatus('idle'), 5000);
       
-    } catch (error) {
-      console.error('Form submission error:', error);
+    } catch (error: any) {
+      console.error('Email sending failed:', error);
+      
+      // Handle different types of errors
+      if (error.status === 400) {
+        console.error('Bad request - check your template variables');
+      } else if (error.status === 429) {
+        console.error('Rate limit exceeded - too many requests');
+      } else if (error.status === 403) {
+        console.error('Access denied - check your service configuration');
+      } else {
+        console.error('Email service error:', error.text || error.message);
+      }
+      
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -226,15 +271,24 @@ const ContactForm = () => {
         {/* Submit Status Messages */}
         {submitStatus === 'success' && (
           <div className="bg-green-600 text-white p-4 rounded-lg">
-            <p className="font-medium">Message sent successfully!</p>
-            <p className="text-sm">Thank you for contacting us. We'll get back to you soon.</p>
+            <p className="font-medium">✅ Message sent successfully!</p>
+            <p className="text-sm">Thank you for contacting us. We've received your message and will get back to you within 24 hours.</p>
           </div>
         )}
         
         {submitStatus === 'error' && (
           <div className="bg-red-600 text-white p-4 rounded-lg">
-            <p className="font-medium">Failed to send message.</p>
-            <p className="text-sm">Please try again or contact us directly.</p>
+            <p className="font-medium">❌ Failed to send message</p>
+            <p className="text-sm">
+              There was an issue sending your message. Please try again or contact us directly at{" "}
+              <a href="mailto:fatokivictor2@gmail.com" className="underline hover:text-yellow-300">
+                fatokivictor2@gmail.com
+              </a>
+              {" "}or call{" "}
+              <a href="tel:+2347067935319" className="underline hover:text-yellow-300">
+                +234 706 793 5319
+              </a>
+            </p>
           </div>
         )}
 

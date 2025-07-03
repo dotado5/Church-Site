@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MOJ Contact Form Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #FFD600;
+            color: #000;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 0 0 8px 8px;
+        }
+        .field {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: white;
+            border-left: 4px solid #FFD600;
+        }
+        .field-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .footer {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏛️ MOJ Church - New Contact Form Submission</h1>
+    </div>
+    
+    <div class="content">
+        <p>Hello Church Admin,</p>
+        <p>You have received a new message through the MOJ website contact form:</p>
+        
+        <div class="field">
+            <div class="field-label">👤 Name:</div>
+            <div>{{name}}</div>
+        </div>
+        
+        <div class="field">
+            <div class="field-label">📧 Email Address:</div>
+            <div>{{email}}</div>
+        </div>
+        
+        <div class="field">
+            <div class="field-label">📝 Subject:</div>
+            <div>{{subject}}</div>
+        </div>
+        
+        <div class="field">
+            <div class="field-label">💬 Message:</div>
+            <div>{{message}}</div>
+        </div>
+        
+        <div class="field">
+            <div class="field-label">🕒 Submitted At:</div>
+            <div>{{submitted_at}}</div>
+        </div>
+        
+        <div style="margin-top: 20px; padding: 15px; background-color: #e3f2fd; border-radius: 5px;">
+            <strong>💡 Quick Reply:</strong> You can reply directly to this email to respond to {{name}}.
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>This message was sent from the MOJ Church website contact form.</p>
+        <p>📍 1 Church Street, Olowu Ikeja, Lagos, Nigeria</p>
+        <p>📞 +234 706 793 5319 | 📧 fatokivictor2@gmail.com</p>
+    </div>
+</body>
+</html>
+
+<!-- 
+    EMAILJS TEMPLATE SETUP INSTRUCTIONS:
+    ====================================
+    
+    1. Copy the content between the <body> tags (not including <body> and </body>)
+    2. Go to your EmailJS dashboard
+    3. Create a new email template
+    4. Paste the content into the template editor
+    5. Make sure these variables are included: {{name}}, {{email}}, {{subject}}, {{message}}, {{submitted_at}}
+    6. Test the template with sample data
+    7. Copy the Template ID and add it to your .env.local file
+    
+    SIMPLIFIED VERSION (if HTML doesn't work):
+    ========================================
+    
+    Subject: New Contact Form Submission from {{name}}
+    
+    Hello Church Admin,
+    
+    You have received a new message through the MOJ website:
+    
+    Name: {{name}}
+    Email: {{email}}
+    Subject: {{subject}}
+    Message: {{message}}
+    Submitted: {{submitted_at}}
+    
+    You can reply directly to this email to respond to {{name}}.
+    
+    Best regards,
+    MOJ Website Contact Form
+--> 
