@@ -8,7 +8,8 @@ import Hero from "@/components/homepageComponents/Hero";
 import LatestArticles from "@/components/homepageComponents/LatestArticles";
 import useActivities from "@/hooks/useActivities";
 import { useArticles } from "@/hooks/useArticles";
-import { Activity, Article } from "@/types/dataTypes";
+import usePastorCorner from "@/hooks/usePastorCorner";
+import { Activity, Article, PastorCorner } from "@/types/dataTypes";
 import { fetchData } from "@/utils/fetchData";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,16 +19,22 @@ function Home() {
   const pathName = usePathname();
   const { getAllArticles } = useArticles();
   const { getAllActivities } = useActivities();
+  const { getLatestPastorCorner } = usePastorCorner();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [pastorCorner, setPastorCorner] = useState<PastorCorner | null>(null);
 
   useEffect(() => {
     fetchPageData();
   }, [pathName]);
 
   async function fetchPageData() {
-    const activitiesResponse = await fetchData(getAllActivities);
-    const articlesResponse = await fetchData(getAllArticles);
+    // Fetch all homepage data concurrently
+    const [activitiesResponse, articlesResponse, pastorCornerResponse] = await Promise.all([
+      fetchData(getAllActivities),
+      fetchData(getAllArticles),
+      fetchData(getLatestPastorCorner),
+    ]);
 
     if (activitiesResponse && activitiesResponse.status === 200) {
       setActivities(activitiesResponse.data.data as Activity[]);
@@ -35,6 +42,10 @@ function Home() {
 
     if (articlesResponse && articlesResponse.status === 200) {
       setArticles(articlesResponse.data.data as Article[]);
+    }
+
+    if (pastorCornerResponse && pastorCornerResponse.status === 200) {
+      setPastorCorner(pastorCornerResponse.data.data as PastorCorner);
     }
   }
 

@@ -22,4 +22,27 @@ interface Coordinator {
   about: string;
 }
 
-export type { Activity, Article, Coordinator };
+interface Pastor {
+  _id: string;
+  name: string;
+  title: string;
+  welcomeMessage: string;
+  image: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface PastorCorner {
+  _id: string;
+  title: string;
+  content: string;
+  pastorId: Pastor;
+  datePublished: string;
+  isPublished: boolean;
+  excerpt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type { Activity, Article, Coordinator, Pastor, PastorCorner };
