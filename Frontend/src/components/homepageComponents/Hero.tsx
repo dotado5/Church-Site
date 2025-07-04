@@ -11,26 +11,36 @@ const Hero: React.FC = () => {
       src: "/images/Group1.svg",
       className:
         "absolute top-[-1em] right-[223px] sm:top-[32%] sm:right-[-0.5em] md:top-[32%] md:right-[-0.5em]",
+      floatAnimation: "float-wave",
+      delay: "float-delay-1",
     },
     {
       src: "/images/Group3.svg",
       className:
         "absolute bottom-[-1%] left-[30%] sm:bottom-[43%] sm:left-[15%] md:bottom-[43%] md:left-[6%]",
+      floatAnimation: "float-drift",
+      delay: "float-delay-2",
     },
     {
       src: "/images/Group4.svg",
       className:
         "absolute top-[18%] left-[12%] sm:top-[27%] sm:left-0 md:top-[27%] md:left-0",
+      floatAnimation: "float-bounce",
+      delay: "float-delay-3",
     },
     {
       src: "/images/Group5.svg",
       className:
         " absolute right-[50%] top-[2em] sm:top-[12%] sm:right-[48%] md:top-[12%] md:right-[48%]",
+      floatAnimation: "float-sway",
+      delay: "float-delay-4",
     },
     {
       src: "/images/Group6.svg",
       className:
         "absolute bottom-[25%] right-[10%] sm:bottom-[8%] sm:right-[5%] md:bottom-[8%] md:right-[15%]",
+      floatAnimation: "float-spiral",
+      delay: "float-delay-5",
     },
   ];
 
@@ -47,6 +57,8 @@ const Hero: React.FC = () => {
             <HeroImage
               src={image.src}
               className={image.className}
+              floatAnimation={image.floatAnimation}
+              delay={image.delay}
               key={index}
             />
           ))}

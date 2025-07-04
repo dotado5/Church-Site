@@ -6,7 +6,8 @@ const Http = {
       const response = await axios.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      console.error("GET request failed:", url, error);
+      throw error;
     }
   },
 
@@ -15,7 +16,7 @@ const Http = {
       const response = await axios.post(url, body, config);
       return response;
     } catch (error) {
-      console.log(error);
+      console.error("POST request failed:", url, error);
       throw error;
     }
   },

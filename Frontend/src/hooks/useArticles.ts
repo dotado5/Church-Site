@@ -8,7 +8,8 @@ const useArticles = () => {
       const res = await Http.get(url);
       return res;
     } catch (error) {
-      console.log(error);
+      console.error("Error in getAllArticles:", error);
+      throw error;
     }
   };
 
@@ -18,7 +19,8 @@ const useArticles = () => {
       const res = await Http.get(url);
       return res;
     } catch (error) {
-      console.log(error);
+      console.error("Error in getAllArticlesWithAuthors:", error);
+      throw error;
     }
   };
 
@@ -28,7 +30,8 @@ const useArticles = () => {
       const res = await Http.get(url);
       return res;
     } catch (error) {
-      console.log(error);
+      console.error("Error in getArticleByIdWithAuthor:", error);
+      throw error;
     }
   };
 
