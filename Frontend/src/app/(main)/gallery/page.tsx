@@ -1,174 +1,248 @@
 "use client";
 
-import WithNavbar from "@/Layout/WithNavbar";
-import { Footer } from "@/components/Footer";
-import GalleryGrid from "@/components/gallery/GalleryGrid";
+import React, { useState, useEffect } from "react";
 import { useMemories } from "@/hooks/useMemories";
-import { Memory } from "@/types/dataTypes";
-import { fetchData } from "@/utils/fetchData";
-import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import useActivities from "@/hooks/useActivities";
+import { Memory, ActivityWithMemories } from "@/types/dataTypes";
+import WithNavbar from "@/Layout/WithNavbar";
+import { PageHeader } from "@/components/PageHeader";
+import EventFilter from "@/components/gallery/EventFilter";
+import GalleryGrid from "@/components/gallery/GalleryGrid";
+import Loader from "@/components/Loader/Loader";
 
-// Fallback gallery data using existing public images
-const fallbackMemories: Memory[] = [
-  {
-    _id: "fallback-1",
-    imageUrl: "/images/groupPic.svg",
-    height: 600,
-    width: 800,
-    imgType: "svg",
-    activityId: "group-photo-1"
-  },
-  {
-    _id: "fallback-2", 
-    imageUrl: "/images/Group1.svg",
-    height: 400,
-    width: 400,
-    imgType: "svg",
-    activityId: "event-1"
-  },
-  {
-    _id: "fallback-3",
-    imageUrl: "/images/Group2.svg", 
-    height: 300,
-    width: 500,
-    imgType: "svg",
-    activityId: "event-2"
-  },
-  {
-    _id: "fallback-4",
-    imageUrl: "/images/Group3.svg",
-    height: 500,
-    width: 300,
-    imgType: "svg", 
-    activityId: "event-3"
-  },
-  {
-    _id: "fallback-5",
-    imageUrl: "/images/Group4.svg",
-    height: 400,
-    width: 600,
-    imgType: "svg",
-    activityId: "event-4"
-  },
-  {
-    _id: "fallback-6",
-    imageUrl: "/images/Group5.svg",
-    height: 350,
-    width: 350,
-    imgType: "svg",
-    activityId: "event-5"
-  },
-  {
-    _id: "fallback-7",
-    imageUrl: "/images/Group6.svg",
-    height: 450,
-    width: 300,
-    imgType: "svg",
-    activityId: "event-6"
-  },
-  {
-    _id: "fallback-8",
-    imageUrl: "/images/pastor.svg",
-    height: 600,
-    width: 400,
-    imgType: "svg",
-    activityId: "pastor-event"
-  },
-  {
-    _id: "fallback-9",
-    imageUrl: "/images/busayor.png",
-    height: 400,
-    width: 400,
-    imgType: "png",
-    activityId: "coordinator-spotlight"
-  },
-  {
-    _id: "fallback-10",
-    imageUrl: "/images/paul_smith.png",
-    height: 300,
-    width: 400,
-    imgType: "png",
-    activityId: "coordinator-spotlight-2"
-  }
-];
-
-const Gallery = () => {
-  const pathName = usePathname();
-  const { getAllMemories } = useMemories();
+const Gallery: React.FC = () => {
   const [memories, setMemories] = useState<Memory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState<ActivityWithMemories[]>([]);
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMemories, setIsLoadingMemories] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [usingFallback, setUsingFallback] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
+  const { getGalleryByEvents, getMemoriesByActivity, getAllMemories } = useMemories();
+  const { getAllActivities } = useActivities();
+
+  // Load events with memories
   useEffect(() => {
-    window.localStorage.setItem("currentAddress", pathName);
-  }, [pathName]);
-
-  useEffect(() => {
-    loadGalleryData();
-  }, []);
-
-  const loadGalleryData = async () => {
-    try {
-      setLoading(true);
+    const loadEvents = async () => {
+      setIsLoading(true);
       setError(null);
       
-      const memoriesResponse = await fetchData(() => getAllMemories());
-      
-      if (memoriesResponse?.status === 200 && memoriesResponse.data?.length > 0) {
-        setMemories(memoriesResponse.data as Memory[]);
-        setUsingFallback(false);
-      } else {
-        // Use fallback data if API returns no memories
-        console.log("No memories from API, using fallback gallery");
-        setMemories(fallbackMemories);
-        setUsingFallback(true);
+      try {
+        const response = await getGalleryByEvents();
+        if (response?.data?.data) {
+          setEvents(response.data.data);
+          // Load all memories by default
+          await loadMemories(null, 1);
+        } else {
+          console.warn("No events data received, using fallback");
+          await loadFallbackData();
+        }
+      } catch (error) {
+        console.error("Error loading events:", error);
+        // Fallback to loading all memories
+        await loadFallbackData();
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadEvents();
+  }, []);
+
+  // Load fallback data if event-based API fails
+  const loadFallbackData = async () => {
+    try {
+      // Try to get all memories and activities separately
+      const [memoriesResponse, activitiesResponse] = await Promise.all([
+        getAllMemories(1, 50),
+        getAllActivities().catch(() => null)
+      ]);
+
+      if (memoriesResponse?.data?.data) {
+        setMemories(memoriesResponse.data.data);
+        setCurrentPage(memoriesResponse.data.pagination?.currentPage || 1);
+        setTotalPages(memoriesResponse.data.pagination?.totalPages || 1);
+        setHasNextPage(memoriesResponse.data.pagination?.hasNextPage || false);
+      }
+
+      // Create mock events if activities available
+      if (activitiesResponse?.data?.data) {
+        const mockEvents: ActivityWithMemories[] = activitiesResponse.data.data.map((activity: any) => ({
+          ...activity,
+          memoryCount: Math.floor(Math.random() * 10) + 1,
+          previewMemories: []
+        }));
+        setEvents(mockEvents);
       }
     } catch (error) {
-      console.error("Error fetching memories:", error);
-      // Use fallback data on error
-      console.log("API error, using fallback gallery");
-      setMemories(fallbackMemories);
-      setUsingFallback(true);
-      setError(null); // Don't show error since we have fallback
-    } finally {
-      setLoading(false);
+      console.error("Error loading fallback data:", error);
+      setError("Failed to load gallery. Please try again later.");
     }
   };
 
+  // Load memories based on selected event
+  const loadMemories = async (eventId: string | null, page: number = 1) => {
+    setIsLoadingMemories(true);
+    setError(null);
+
+    try {
+      let response;
+      
+      if (eventId) {
+        // Load memories for specific event
+        response = await getMemoriesByActivity(eventId, page, 20);
+        if (response?.data?.data) {
+          setMemories(response.data.data.memories || []);
+          setCurrentPage(response.data.data.pagination?.currentPage || 1);
+          setTotalPages(response.data.data.pagination?.totalPages || 1);
+          setHasNextPage(response.data.data.pagination?.hasNextPage || false);
+        }
+      } else {
+        // Load all memories
+        response = await getAllMemories(page, 50);
+        if (response?.data?.data) {
+          setMemories(response.data.data);
+          setCurrentPage(response.data.pagination?.currentPage || 1);
+          setTotalPages(response.data.pagination?.totalPages || 1);
+          setHasNextPage(response.data.pagination?.hasNextPage || false);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading memories:", error);
+      setError("Failed to load photos. Please try again later.");
+    } finally {
+      setIsLoadingMemories(false);
+    }
+  };
+
+  // Handle event selection
+  const handleEventSelect = (eventId: string | null) => {
+    setSelectedEventId(eventId);
+    setCurrentPage(1);
+    loadMemories(eventId, 1);
+  };
+
+  // Handle pagination
+  const handleLoadMore = () => {
+    if (hasNextPage) {
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      loadMemories(selectedEventId, nextPage);
+    }
+  };
+
+  // Get current event info
+  const currentEvent = selectedEventId ? events.find(e => e._id === selectedEventId) : null;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
+        <PageHeader 
+          title="Gallery" 
+          description="Explore Memorable Moments, Events, and Celebrations Captured in Our Gallery"
+          yellowText={false}
+        />
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex justify-center items-center min-h-[400px]">
+            <Loader text="Loading gallery..." textColor="text-white" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
+        <PageHeader 
+          title="Gallery" 
+          description="Explore Memorable Moments, Events, and Celebrations Captured in Our Gallery"
+          yellowText={false}
+        />
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <p className="text-red-400 text-lg mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-[#FFD600] text-black px-6 py-3 rounded-lg hover:bg-[#e6c200] transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full min-h-screen">
-      {/* Header Section */}
-      <div className="w-full max-w-6xl mx-auto px-6 py-16">
-        <div className="flex flex-col items-center mb-16 text-center">
-          <h1 className="text-[65px] font-bold text-white text-center sm:text-[36px] md:text-[42px] mb-4">
-            MOJ in Frames: A Visual Journey
-          </h1>
-          <p className="text-white text-[18px] text-center sm:text-base md:text-base max-w-2xl">
-            Explore Memorable Moments, Events, and Celebrations Captured in Our Gallery.
-          </p>
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
+      <PageHeader 
+        title="Gallery" 
+        description="Explore Memorable Moments, Events, and Celebrations Captured in Our Gallery"
+        yellowText={false}
+      />
+      
+      <div className="container mx-auto px-4 py-8">
+        {/* Event Filter */}
+        <EventFilter
+          events={events}
+          selectedEventId={selectedEventId}
+          onEventSelect={handleEventSelect}
+          loading={isLoading}
+        />
+
+        {/* Gallery Stats */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="text-gray-400">
+            {currentEvent ? (
+              <span>
+                Showing photos from <span className="text-[#FFD600]">{currentEvent.name}</span> 
+                ({memories.length} photos)
+              </span>
+            ) : (
+              <span>
+                Showing all photos ({memories.length} photos)
+              </span>
+            )}
+          </div>
           
-          {/* Gallery Status */}
-          {usingFallback && (
-            <div className="mt-6 bg-blue-600 bg-opacity-20 border border-blue-400 rounded-lg px-4 py-3">
-              <p className="text-blue-200 text-sm">
-                📸 Displaying sample gallery. Real memories from our backend will appear here once uploaded!
-              </p>
+          {totalPages > 1 && (
+            <div className="text-sm text-gray-400">
+              Page {currentPage} of {totalPages}
             </div>
           )}
         </div>
 
         {/* Gallery Grid */}
-        <GalleryGrid 
-          memories={memories} 
-          loading={loading} 
-          error={error}
-        />
+        {isLoadingMemories ? (
+          <div className="flex justify-center items-center min-h-[400px]">
+            <Loader text="Loading photos..." textColor="text-white" />
+          </div>
+        ) : (
+          <>
+            <GalleryGrid 
+              memories={memories} 
+              loading={isLoadingMemories}
+              error={error}
+            />
+            
+            {/* Load More Button */}
+            {hasNextPage && memories.length > 0 && (
+              <div className="text-center mt-8">
+                <button
+                  onClick={handleLoadMore}
+                  className="bg-[#FFD600] text-black px-6 py-3 rounded-lg hover:bg-[#e6c200] transition-colors"
+                >
+                  Load More Photos
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };

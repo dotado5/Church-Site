@@ -5,6 +5,26 @@ interface Activity {
   description: string;
 }
 
+interface ActivityWithMemories extends Activity {
+  memoryCount: number;
+  previewMemories: Memory[];
+  memories?: Memory[];
+}
+
+interface MemoryPagination {
+  currentPage: number;
+  totalPages: number;
+  totalMemories: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
+interface ActivityMemoriesResponse {
+  activity: Activity;
+  memories: Memory[];
+  pagination: MemoryPagination;
+}
+
 interface Article {
   displayImage: string;
   title: string;
@@ -96,6 +116,9 @@ interface Memory {
 
 export type { 
   Activity, 
+  ActivityWithMemories,
+  MemoryPagination,
+  ActivityMemoriesResponse,
   Article, 
   Author,
   ArticleWithAuthor,
