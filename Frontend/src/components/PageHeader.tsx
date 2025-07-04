@@ -15,14 +15,14 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <div
-      className={` xl:w-[1000px] lg:w-[1000px] sm:w-auto md:w-auto mx-auto text-center ${className}`}
+      className={`w-full max-w-4xl xl:max-w-5xl mx-auto text-center px-4 sm:px-6 ${className}`}
     >
-      <h1 className="text-white xl:text-[65px] lg:text-[65px] font-bold sm:text-[36px] md:text-[42px] text-center ">
+      <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[65px] font-bold text-center leading-tight sm:leading-tight md:leading-tight lg:leading-tight mb-4 sm:mb-6">
         {title}
       </h1>
-      <p className="text-white text-[15px] font-normal text-center ">
+      <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl xl:text-[18px] font-normal text-center leading-relaxed max-w-3xl mx-auto">
         {description}
-        {yellowText && <span></span>}
+        {yellowText && <span className="text-[#FFD600]"></span>}
       </p>
     </div>
   );

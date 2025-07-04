@@ -41,16 +41,16 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ memories, loading = false, er
   const getGridItemClass = (memory: Memory, index: number) => {
     const aspectRatio = memory.width / memory.height;
     
-    // Create varied layout pattern
+    // Create varied layout pattern - simplified for mobile
     if (index % 7 === 0 || index % 7 === 3) {
-      // Large items
-      return "col-span-2 row-span-2";
+      // Large items - smaller on mobile
+      return "col-span-2 row-span-2 sm:col-span-2 sm:row-span-2";
     } else if (aspectRatio > 1.5) {
       // Wide items
-      return "col-span-2 row-span-1";
+      return "col-span-2 row-span-1 sm:col-span-2 sm:row-span-1";
     } else if (aspectRatio < 0.7) {
-      // Tall items
-      return "col-span-1 row-span-2";
+      // Tall items - regular size on mobile
+      return "col-span-1 row-span-2 sm:col-span-1 sm:row-span-2";
     } else {
       // Regular items
       return "col-span-1 row-span-1";
@@ -59,7 +59,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ memories, loading = false, er
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-20">
+      <div className="flex justify-center items-center py-12 sm:py-20">
         <Loader text="Loading gallery..." textColor="text-white" />
       </div>
     );
@@ -67,16 +67,11 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ memories, loading = false, er
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-20">
-        <div className="text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">Failed to Load Gallery</h3>
-          <p className="text-gray-300 mb-6">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="bg-[#FFD600] text-black px-6 py-3 rounded-lg hover:bg-[#e6c200] transition-colors"
-          >
-            Try Again
-          </button>
+      <div className="flex justify-center items-center py-12 sm:py-20">
+        <div className="text-center text-white max-w-md px-4">
+          <div className="text-red-500 text-4xl sm:text-6xl mb-4">📷</div>
+          <h3 className="text-lg sm:text-xl font-semibold mb-2">Gallery Error</h3>
+          <p className="text-gray-300 text-sm sm:text-base">{error}</p>
         </div>
       </div>
     );
@@ -84,11 +79,12 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ memories, loading = false, er
 
   if (memories.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20">
-        <div className="text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">No Photos Yet</h3>
-          <p className="text-gray-300">
-            Our gallery is currently empty. Check back soon for amazing memories from MOJ events!
+      <div className="flex justify-center items-center py-12 sm:py-20">
+        <div className="text-center text-white max-w-md px-4">
+          <div className="text-gray-400 text-4xl sm:text-6xl mb-4">📸</div>
+          <h3 className="text-lg sm:text-xl font-semibold mb-2">No Photos Yet</h3>
+          <p className="text-gray-300 text-sm sm:text-base">
+            Our gallery is being prepared. Check back soon for beautiful moments from our church community!
           </p>
         </div>
       </div>
@@ -96,12 +92,12 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ memories, loading = false, er
   }
 
   return (
-    <>
+    <div className="px-4 sm:px-6">
       {/* Gallery Stats */}
-      <div className="flex justify-center mb-8">
-        <div className="bg-[#2a2a2a] rounded-lg px-6 py-3">
-          <p className="text-white text-center">
-            <span className="text-[#FFD600] font-bold text-lg">{memories.length}</span>
+      <div className="flex justify-center mb-6 sm:mb-8">
+        <div className="bg-[#2a2a2a] rounded-lg px-4 py-3 sm:px-6">
+          <p className="text-white text-center text-sm sm:text-base">
+            <span className="text-[#FFD600] font-bold text-lg sm:text-xl">{memories.length}</span>
             <span className="ml-2">
               {memories.length === 1 ? 'Photo' : 'Photos'} in Gallery
             </span>
@@ -109,27 +105,37 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ memories, loading = false, er
         </div>
       </div>
 
+      {/* Mobile Instructions */}
+      <div className="sm:hidden mb-4 text-center">
+        <p className="text-gray-400 text-xs">
+          Tap any photo to view full screen
+        </p>
+      </div>
+
       {/* Responsive Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 auto-rows-[200px] sm:auto-rows-[150px]">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4 auto-rows-[120px] sm:auto-rows-[150px] md:auto-rows-[200px]">
         {memories.map((memory, index) => (
           <PhotoCard
             key={memory._id}
             memory={memory}
             onClick={() => openLightbox(index)}
-            className={`${getGridItemClass(memory, index)} min-h-[150px]`}
+            className={`${getGridItemClass(memory, index)} min-h-[120px] sm:min-h-[150px] cursor-pointer transform transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]`}
           />
         ))}
       </div>
 
       {/* Load More Hint */}
       {memories.length > 0 && (
-        <div className="flex justify-center mt-12">
-          <div className="text-center">
-            <p className="text-gray-400 text-sm">
-              💡 Click any photo to view in full screen
+        <div className="flex justify-center mt-8 sm:mt-12">
+          <div className="text-center max-w-sm px-4">
+            <p className="text-gray-400 text-xs sm:text-sm">
+              💡 <span className="hidden sm:inline">Click</span><span className="sm:hidden">Tap</span> any photo to view in full screen
             </p>
-            <p className="text-gray-400 text-xs mt-1">
+            <p className="text-gray-400 text-xs mt-1 hidden sm:block">
               Use arrow keys to navigate when viewing photos
+            </p>
+            <p className="text-gray-400 text-xs mt-1 sm:hidden">
+              Swipe left or right to navigate photos
             </p>
           </div>
         </div>
@@ -144,7 +150,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ memories, loading = false, er
         onNext={nextImage}
         onPrev={prevImage}
       />
-    </>
+    </div>
   );
 };
 
