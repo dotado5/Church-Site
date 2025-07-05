@@ -46,7 +46,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ params }) => {
     if (params.id) {
       fetchArticle();
     }
-  }, [params.id, getArticleByIdWithAuthor]);
+  }, [params.id, getArticleByIdWithAuthor]); // getArticleByIdWithAuthor is now properly memoized
 
   // Loading state
   if (loading) {
@@ -107,7 +107,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ params }) => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#1a1a1a]">
+    <div className="w-full min-h-screen bg-default">
       {/* Hero Section */}
       <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] relative">
         <img
@@ -117,7 +117,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ params }) => {
           onError={handleImageError}
         />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end">
-          <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 pb-6 sm:pb-12">
+          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pb-6 sm:pb-12">
             <div className="flex items-center gap-2 sm:gap-4 mb-3 sm:mb-4">
               <a
                 href="/articles"
@@ -153,11 +153,11 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ params }) => {
       </div>
 
       {/* Article Content */}
-      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 bg-default">
         <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 lg:p-12">
           <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
             <div 
-              className="text-gray-800 leading-relaxed text-sm sm:text-base lg:text-lg"
+              className="text-default leading-relaxed text-sm sm:text-base lg:text-lg"
               style={{ whiteSpace: 'pre-wrap' }}
             >
               {article.text}

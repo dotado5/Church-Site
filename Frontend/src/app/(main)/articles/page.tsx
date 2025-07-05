@@ -55,7 +55,7 @@ const Articles = () => {
     return () => {
       isMounted = false;
     };
-  }, [currentPage]); // Removed getAllArticlesWithAuthors to prevent infinite loops
+  }, [currentPage, getAllArticlesWithAuthors]); // getAllArticlesWithAuthors is now properly memoized
 
   const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
@@ -94,10 +94,6 @@ const Articles = () => {
         <h1 className="text-[65px] font-bold text-white text-center sm:text-[36px] md:text-[42px]">
           Mojites Talk Corner: Safe Space to Share, Learn, and Grow Together
         </h1>
-        <p className="text-white text-[18px] sm:text-base md:text-base text-center">
-          For Media enquiries, please contact{" "}
-          <span className="text-[#FFD600] ">fatokivictor2@gmail.com</span>
-        </p>
       </div>
 
       <LatestArticles 
