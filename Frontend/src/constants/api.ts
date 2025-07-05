@@ -1,5 +1,5 @@
-// const API_BASE_URL = "https://api-2at6qg5khq-uc.a.run.app";
-const API_BASE_URL = "http://localhost:8000";
+// Use local backend for development (your backend is running on port 8000)
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const ENDPOINTS = {
   GET_ALL_ARTICLES: "article",
@@ -12,10 +12,8 @@ const ENDPOINTS = {
   MEMORY_WITH_IMAGE: "memory/with-image",
   COORDINATOR: "coordinator",
   FEATURED_COORDINATOR: "coordinator/featured",
-  PASTOR: "pastor",
-  ACTIVE_PASTOR: "pastor/active",
-  PASTOR_CORNER: "pastor-corner",
-  LATEST_PASTOR_CORNER: "pastor-corner/latest",
+  MESSAGE: "message",
+  LATEST_MESSAGE: "message/latest",
   ARTICLES_WITH_AUTHORS: "article/with-authors",
   ARTICLE_WITH_AUTHOR: "article",
 };

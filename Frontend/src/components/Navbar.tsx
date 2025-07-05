@@ -45,8 +45,8 @@ export const Navbar = () => {
       content: "Coordinators",
     },
     {
-      src: "/blogs",
-      content: "Blogs",
+      src: "/articles",
+      content: "Articles",
     },
     {
       src: "/gallery",

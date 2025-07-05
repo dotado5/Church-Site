@@ -3,13 +3,13 @@
 import WithNavbar from "@/Layout/WithNavbar";
 import { Footer } from "@/components/Footer";
 import Activities from "@/components/homepageComponents/Activities";
-import { DescriptionBox } from "@/components/homepageComponents/DescriptionBox";
 import Hero from "@/components/homepageComponents/Hero";
 import LatestArticles from "@/components/homepageComponents/LatestArticles";
+import LatestEvents from "@/components/homepageComponents/LatestEvents";
+import { CoordinatorCorner } from "@/components/homepageComponents/CoordinatorCorner";
 import useActivities from "@/hooks/useActivities";
 import { useArticles } from "@/hooks/useArticles";
-import usePastorCorner from "@/hooks/usePastorCorner";
-import { Activity, Article, PastorCorner } from "@/types/dataTypes";
+import { Activity, Article } from "@/types/dataTypes";
 import { fetchData } from "@/utils/fetchData";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,10 +19,8 @@ function Home() {
   const pathName = usePathname();
   const { getAllArticles } = useArticles();
   const { getAllActivities } = useActivities();
-  const { getLatestPastorCorner } = usePastorCorner();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
-  const [pastorCorner, setPastorCorner] = useState<PastorCorner | null>(null);
 
   useEffect(() => {
     fetchPageData();
@@ -30,10 +28,9 @@ function Home() {
 
   async function fetchPageData() {
     // Fetch all homepage data concurrently
-    const [activitiesResponse, articlesResponse, pastorCornerResponse] = await Promise.all([
+    const [activitiesResponse, articlesResponse] = await Promise.all([
       fetchData(getAllActivities),
       fetchData(getAllArticles),
-      fetchData(getLatestPastorCorner),
     ]);
 
     if (activitiesResponse && activitiesResponse.status === 200) {
@@ -42,10 +39,6 @@ function Home() {
 
     if (articlesResponse && articlesResponse.status === 200) {
       setArticles(articlesResponse.data.data as Article[]);
-    }
-
-    if (pastorCornerResponse && pastorCornerResponse.status === 200) {
-      setPastorCorner(pastorCornerResponse.data.data as PastorCorner);
     }
   }
 
@@ -66,7 +59,8 @@ function Home() {
             <img src="/images/groupPic.svg" alt="" className="w-full h-full" />
           </motion.div>
         </section>
-        <DescriptionBox />
+        <CoordinatorCorner />
+        <LatestEvents />
         <LatestArticles fetchArticles={articles} />
         <Activities activities={activities} />
         <Footer />

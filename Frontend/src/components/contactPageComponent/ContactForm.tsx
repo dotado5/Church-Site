@@ -1,10 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from 'next/image';
-import location_icon from '../../../public/images/location_icon.png';
-import call_icon from '../../../public/images/call_icon.png';
-import mail_icon from '../../../public/images/mail_icon.png';
 import emailjs from '@emailjs/browser';
 
 interface FormData {
@@ -179,199 +175,222 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="flex w-full gap-8 lg:gap-[119px] items-start justify-center mt-16 sm:mt-24 lg:mt-[128px] mb-16 sm:mb-24 lg:mb-[130px] flex-col-reverse lg:flex-row px-4 sm:px-6">
-      {/* Contact Information */}
-      <div className="w-full lg:w-[280px] flex flex-col gap-4 lg:gap-[16px] order-2 lg:order-1">
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 lg:gap-[16px]">
-          <div className="flex flex-col sm:flex-row lg:flex-row items-start sm:items-center lg:items-center text-white text-sm sm:text-base lg:text-[18px] gap-2 lg:gap-[8px]">
-            <div className="flex-shrink-0">
-              <Image src={location_icon} alt="Location" width={24} height={24} className="sm:w-6 sm:h-6" />
-            </div>
-            <span className="leading-snug">1 Church Street, Olowu Ikeja, Lagos, Nigeria.</span>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row lg:flex-row items-start sm:items-center lg:items-center text-white text-sm sm:text-base lg:text-[18px] gap-2 lg:gap-[8px]">
-            <div className="flex-shrink-0">
-              <Image src={call_icon} alt="Phone" width={24} height={24} className="sm:w-6 sm:h-6" />
-            </div>
-            <a href="tel:+2347067935319" className="hover:text-[#FFD600] transition-colors">
-              +234 706 793 5319
-            </a>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row lg:flex-row items-start sm:items-center lg:items-center text-white text-sm sm:text-base lg:text-[18px] gap-2 lg:gap-[8px]">
-            <div className="flex-shrink-0">
-              <Image src={mail_icon} alt="Email" width={24} height={24} className="sm:w-6 sm:h-6" />
-            </div>
-            <a href="mailto:fatokivictor2@gmail.com" className="hover:text-[#FFD600] transition-colors break-all">
-              fatokivictor2@gmail.com
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Contact Form */}
-      <div className="w-full max-w-md lg:max-w-none lg:flex-1 order-1 lg:order-2">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6 lg:gap-8">
-          {/* Name Fields */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-            <div className="flex flex-col items-start w-full gap-2">
-              <label
-                htmlFor="firstName"
-                className="text-white text-base sm:text-lg lg:text-[20px] font-medium"
-              >
-                First Name *
-              </label>
-              <input
-                type="text"
-                name="firstName"
-                id="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                className={`bg-transparent border-b-2 w-full p-2 lg:p-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-colors text-sm sm:text-base ${
-                  errors.firstName ? 'border-red-500' : 'border-white'
-                }`}
-                placeholder="Enter first name"
-              />
-              {errors.firstName && (
-                <span className="text-red-500 text-xs sm:text-sm">{errors.firstName}</span>
-              )}
-            </div>
-
-            <div className="flex flex-col items-start w-full gap-2">
-              <label
-                htmlFor="lastName"
-                className="text-white text-base sm:text-lg lg:text-[20px] font-medium"
-              >
-                Last Name *
-              </label>
-              <input
-                type="text"
-                name="lastName"
-                id="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                className={`bg-transparent border-b-2 w-full p-2 lg:p-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-colors text-sm sm:text-base ${
-                  errors.lastName ? 'border-red-500' : 'border-white'
-                }`}
-                placeholder="Enter last name"
-              />
-              {errors.lastName && (
-                <span className="text-red-500 text-xs sm:text-sm">{errors.lastName}</span>
-              )}
-            </div>
-          </div>
-
-          {/* Email Field */}
-          <div className="flex flex-col items-start w-full gap-2">
+    <div className="w-full max-w-4xl mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Name Fields */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-3">
             <label
-              htmlFor="email"
-              className="text-white text-base sm:text-lg lg:text-[20px] font-medium"
+              htmlFor="firstName"
+              className="block text-white text-lg font-medium"
             >
-              Email Address *
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className={`bg-transparent border-b-2 w-full p-2 lg:p-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-colors text-sm sm:text-base ${
-                errors.email ? 'border-red-500' : 'border-white'
-              }`}
-              placeholder="Enter email address"
-            />
-            {errors.email && (
-              <span className="text-red-500 text-xs sm:text-sm">{errors.email}</span>
-            )}
-          </div>
-
-          {/* Subject Field */}
-          <div className="flex flex-col items-start w-full gap-2">
-            <label
-              htmlFor="subject"
-              className="text-white text-base sm:text-lg lg:text-[20px] font-medium"
-            >
-              Subject *
+              First Name *
             </label>
             <input
               type="text"
-              name="subject"
-              id="subject"
-              value={formData.subject}
+              name="firstName"
+              id="firstName"
+              value={formData.firstName}
               onChange={handleInputChange}
-              className={`bg-transparent border-b-2 w-full p-2 lg:p-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-colors text-sm sm:text-base ${
-                errors.subject ? 'border-red-500' : 'border-white'
+              className={`w-full bg-transparent border-2 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-all duration-300 ${
+                errors.firstName ? 'border-red-500' : 'border-gray-500 hover:border-gray-400'
               }`}
-              placeholder="Enter subject"
+              placeholder="Enter your first name"
             />
-            {errors.subject && (
-              <span className="text-red-500 text-xs sm:text-sm">{errors.subject}</span>
+            {errors.firstName && (
+              <span className="text-red-400 text-sm flex items-center gap-2">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                {errors.firstName}
+              </span>
             )}
           </div>
 
-          {/* Message Field */}
-          <div className="flex flex-col items-start w-full gap-2">
+          <div className="space-y-3">
             <label
-              htmlFor="message"
-              className="text-white text-base sm:text-lg lg:text-[20px] font-medium"
+              htmlFor="lastName"
+              className="block text-white text-lg font-medium"
             >
-              Message *
+              Last Name *
             </label>
-            <textarea
-              name="message"
-              id="message"
-              value={formData.message}
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              value={formData.lastName}
               onChange={handleInputChange}
-              rows={4}
-              className={`bg-transparent border-2 w-full p-3 lg:p-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-colors resize-vertical text-sm sm:text-base min-h-[100px] ${
-                errors.message ? 'border-red-500' : 'border-white'
+              className={`w-full bg-transparent border-2 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-all duration-300 ${
+                errors.lastName ? 'border-red-500' : 'border-gray-500 hover:border-gray-400'
               }`}
-              placeholder="Enter your message (minimum 10 characters)"
+              placeholder="Enter your last name"
             />
-            {errors.message && (
-              <span className="text-red-500 text-xs sm:text-sm">{errors.message}</span>
+            {errors.lastName && (
+              <span className="text-red-400 text-sm flex items-center gap-2">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                {errors.lastName}
+              </span>
             )}
           </div>
+        </div>
 
-          {/* Submit Status Messages */}
-          {submitStatus === 'success' && (
-            <div className="bg-green-600 text-white p-4 rounded-lg">
-              <p className="font-medium text-sm sm:text-base">✅ Message sent successfully!</p>
-              <p className="text-xs sm:text-sm mt-1">Thank you for contacting us. We've received your message and will get back to you within 24 hours.</p>
-            </div>
+        {/* Email Field */}
+        <div className="space-y-3">
+          <label
+            htmlFor="email"
+            className="block text-white text-lg font-medium"
+          >
+            Email Address *
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            className={`w-full bg-transparent border-2 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-all duration-300 ${
+              errors.email ? 'border-red-500' : 'border-gray-500 hover:border-gray-400'
+            }`}
+            placeholder="Enter your email address"
+          />
+          {errors.email && (
+            <span className="text-red-400 text-sm flex items-center gap-2">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              {errors.email}
+            </span>
           )}
-          
-          {submitStatus === 'error' && (
-            <div className="bg-red-600 text-white p-4 rounded-lg">
-              <p className="font-medium text-sm sm:text-base">❌ Failed to send message</p>
-              <p className="text-xs sm:text-sm mt-1">
-                There was an issue sending your message. Please try again or contact us directly at{" "}
-                <a href="mailto:fatokivictor2@gmail.com" className="underline hover:text-yellow-300">
-                  fatokivictor2@gmail.com
-                </a>
-                {" "}or call{" "}
-                <a href="tel:+2347067935319" className="underline hover:text-yellow-300">
-                  +234 706 793 5319
-                </a>
-              </p>
-            </div>
-          )}
+        </div>
 
-          {/* Submit Button */}
+        {/* Subject Field */}
+        <div className="space-y-3">
+          <label
+            htmlFor="subject"
+            className="block text-white text-lg font-medium"
+          >
+            Subject *
+          </label>
+          <input
+            type="text"
+            name="subject"
+            id="subject"
+            value={formData.subject}
+            onChange={handleInputChange}
+            className={`w-full bg-transparent border-2 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-all duration-300 ${
+              errors.subject ? 'border-red-500' : 'border-gray-500 hover:border-gray-400'
+            }`}
+            placeholder="What would you like to discuss?"
+          />
+          {errors.subject && (
+            <span className="text-red-400 text-sm flex items-center gap-2">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              {errors.subject}
+            </span>
+          )}
+        </div>
+
+        {/* Message Field */}
+        <div className="space-y-3">
+          <label
+            htmlFor="message"
+            className="block text-white text-lg font-medium"
+          >
+            Message *
+          </label>
+          <textarea
+            name="message"
+            id="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            rows={6}
+            className={`w-full bg-transparent border-2 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD600] transition-all duration-300 resize-vertical min-h-[150px] ${
+              errors.message ? 'border-red-500' : 'border-gray-500 hover:border-gray-400'
+            }`}
+            placeholder="Tell us more about your inquiry..."
+          />
+          {errors.message && (
+            <span className="text-red-400 text-sm flex items-center gap-2">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              {errors.message}
+            </span>
+          )}
+          <div className="text-gray-400 text-sm text-right">
+            {formData.message.length}/1000
+          </div>
+        </div>
+
+        {/* Submit Status Messages */}
+        {submitStatus === 'success' && (
+          <div className="bg-green-600/20 border border-green-500 text-green-400 p-6 rounded-xl">
+            <div className="flex items-center gap-3">
+              <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <p className="font-semibold text-lg">Message sent successfully!</p>
+                <p className="text-sm mt-1">Thank you for contacting us. We've received your message and will get back to you within 24 hours.</p>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {submitStatus === 'error' && (
+          <div className="bg-red-600/20 border border-red-500 text-red-400 p-6 rounded-xl">
+            <div className="flex items-center gap-3">
+              <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <p className="font-semibold text-lg">Failed to send message</p>
+                <p className="text-sm mt-1">
+                  There was an issue sending your message. Please try again or contact us directly at{" "}
+                  <a href="mailto:fatokivictor2@gmail.com" className="underline hover:text-white transition-colors">
+                    fatokivictor2@gmail.com
+                  </a>
+                  {" "}or call{" "}
+                  <a href="tel:+2347067935319" className="underline hover:text-white transition-colors">
+                    +234 706 793 5319
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Submit Button */}
+        <div className="flex justify-center pt-4">
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`flex bg-button p-3 lg:p-4 rounded-full items-center gap-2 text-sm sm:text-base lg:text-[20px] font-medium w-full sm:w-auto sm:min-w-[200px] lg:w-[210px] text-center justify-center transition-all duration-300 ${
+            className={`px-12 py-4 bg-[#FFD600] text-black rounded-full font-bold text-lg transition-all duration-300 min-w-[250px] ${
               isSubmitting 
                 ? 'opacity-50 cursor-not-allowed' 
-                : 'hover:bg-[#e6c200] hover:scale-105 active:scale-95'
+                : 'hover:bg-white hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl'
             }`}
           >
-            {isSubmitting ? 'Sending...' : 'Send Message'}
+            {isSubmitting ? (
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
+                Sending Message...
+              </div>
+            ) : (
+              <div className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+                Send Message
+              </div>
+            )}
           </button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };

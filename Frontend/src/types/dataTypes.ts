@@ -82,22 +82,23 @@ interface Coordinator {
   isFeatured: boolean;
 }
 
-interface Pastor {
+interface Message {
   _id: string;
-  name: string;
   title: string;
-  welcomeMessage: string;
-  image: string;
-  isActive: boolean;
+  content: string;
+  coordinatorId: string | Coordinator;
+  datePublished: string;
+  isPublished: boolean;
+  excerpt?: string;
   createdAt: string;
   updatedAt: string;
 }
 
-interface PastorCorner {
+interface CoordinatorMessage {
   _id: string;
   title: string;
   content: string;
-  pastorId: Pastor;
+  coordinatorId: Coordinator;
   datePublished: string;
   isPublished: boolean;
   excerpt?: string;
@@ -125,7 +126,7 @@ export type {
   ArticlesPagination,
   ArticlesWithAuthorsResponse,
   Coordinator, 
-  Pastor, 
-  PastorCorner,
+  Message,
+  CoordinatorMessage,
   Memory
 };

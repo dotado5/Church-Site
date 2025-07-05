@@ -11,11 +11,10 @@ const CoordinatorsSpotlight: React.FC<CoordinatorsSpotlightProps> = ({ coordinat
     <div className="flex flex-col items-center gap-[48px] mb-[128px] w-full">
       <div className="flex flex-col items-center gap-[16px]">
         <h1 className="text-white text-[65px] sm:text-[36px] md:text-[42px] font-bold text-center">
-          Coordinators Spotlight
+          Coordinators
         </h1>
         <p className="text-[22px] text-white text-center sm:text-base md:text-base">
-          Shining a Light on the Remarkable Contributions of Our MOJ
-          Coordinators
+          Meet our dedicated team of coordinators who serve the MOJ community
         </p>
       </div>
 
@@ -34,7 +33,7 @@ const CoordinatorsSpotlight: React.FC<CoordinatorsSpotlightProps> = ({ coordinat
       ) : (
         <div className="flex flex-col items-center gap-[16px]">
           <p className="text-white text-[18px] text-center sm:text-base md:text-base">
-            No coordinators available in the spotlight at the moment.
+            No coordinators available at the moment.
           </p>
         </div>
       )}

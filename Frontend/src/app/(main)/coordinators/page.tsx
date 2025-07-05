@@ -35,12 +35,10 @@ const Coordinators = () => {
         setCoordinatorOfTheMonth(featuredResponse.data.data as Coordinator);
       }
 
-      // Handle all coordinators
+      // Handle all coordinators - show ALL coordinators in the spotlight
       if (coordinatorsResponse?.status === 200) {
         const coordinators: Coordinator[] = coordinatorsResponse.data.data;
-        // Filter out featured coordinator from the spotlight list
-        const nonFeaturedCoordinators = coordinators.filter(coord => !coord.isFeatured);
-        setAllCoordinators(nonFeaturedCoordinators);
+        setAllCoordinators(coordinators);
       }
     } catch (error) {
       console.error("Error fetching coordinator data:", error);

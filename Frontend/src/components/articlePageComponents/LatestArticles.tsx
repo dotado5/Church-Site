@@ -116,4 +116,4 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
   );
 };
 
-export default LatestArticles;
+export default LatestArticles; 

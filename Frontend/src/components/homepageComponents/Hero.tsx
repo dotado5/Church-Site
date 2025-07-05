@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 import { PageHeader } from "../PageHeader";
 import { Button } from "../Button";
 import HeroImage, { HeroImageProps } from "../HeroImage";
@@ -6,6 +7,12 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 const Hero: React.FC = () => {
+  const router = useRouter();
+
+  const handleBecomeMember = () => {
+    router.push("/contact");
+  };
+
   const images: HeroImageProps[] = [
     {
       src: "/images/Group1.svg",
@@ -71,7 +78,11 @@ const Hero: React.FC = () => {
             className="mt-16 sm:mt-20 md:mt-24 lg:mt-[6em] max-w-6xl"
           />
           <div className="mt-4 sm:mt-6">
-            <Button content={"Become a Member"} icon={true} />
+            <Button 
+              content={"Become a Member"} 
+              icon={true} 
+              onClick={handleBecomeMember}
+            />
           </div>
         </div>
       </motion.div>

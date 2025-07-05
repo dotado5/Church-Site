@@ -101,7 +101,7 @@ export const EnhancedArticle: React.FC<EnhancedArticleProps> = ({
   return (
     <>
       {homePage ? (
-        <Link href={`/blogs/${article._id}`} className="block">
+        <Link href={`/articles/${article._id}`} className="block">
           <div className=" bg-default xl:w-[300px] lg:w-[300px] xl:h-[450px] lg:h-[450px] text-white article-box cursor-pointer hover:transform hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
             <img 
               src={article.displayImage} 
@@ -145,8 +145,8 @@ export const EnhancedArticle: React.FC<EnhancedArticleProps> = ({
           </div>
         </Link>
       ) : (
-        <Link href={`/blogs/${article._id}`} className="block">
-          <div className=" bg-default xl:w-[640px] xl:h-[460px] lg:w-[640px] lg:h-[460px] text-white article-box cursor-pointer hover:transform hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
+        <Link href={`/articles/${article._id}`} className="block">
+          <div className="bg-default w-full max-w-[800px] mx-auto min-h-[460px] text-white article-box cursor-pointer hover:transform hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
             <img
               src={article.displayImage}
               alt={article.title}
