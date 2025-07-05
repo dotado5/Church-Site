@@ -59,49 +59,60 @@ export const Navbar = () => {
   ];
 
   return (
-    <header className="flex items-center mt-4 sm:mt-5 px-4 sm:px-6 lg:px-0 w-full relative z-50">
-      {/* Desktop Logo */}
-      <img
-        src="/images/logo.svg"
-        alt="MOJ Church Logo"
-        className="ml-0 lg:ml-7 hidden lg:block h-12 w-auto"
-      />
-      
-      {/* Desktop Navigation */}
-      <nav className="mx-auto lg:mx-[25%] hidden lg:block">
-        <ul className="flex w-[550px] bg-white gap-2 pl-[5%] py-2 rounded-full">
-          {links.map((link, index) => (
-            <PageLink
-              src={link.src}
-              content={link.content}
-              className={
-                link.src === currentAddress ? "bg-default text-white" : ""
-              }
-              key={index}
-            />
-          ))}
-        </ul>
-      </nav>
-
-      {/* Mobile Navigation Header */}
-      <nav className="w-full flex items-center justify-between bg-[#A198AC] rounded-full p-3 sm:p-4 lg:hidden">
-        <img 
-          src="/images/mobile_icon.png" 
-          alt="MOJ Mobile Icon" 
-          className="h-8 w-8 sm:h-10 sm:w-10" 
-        />
-        <button
-          onClick={() => setIsOpen(true)}
-          className="p-2 touch-manipulation"
-          aria-label="Open navigation menu"
-        >
-          <img 
-            src="/images/hamburger.png" 
-            alt="Menu" 
-            className="h-6 w-6 sm:h-8 sm:w-8" 
+    <header className="mt-4 sm:mt-5 px-4 sm:px-6 lg:px-8 w-full relative z-50">
+            
+      {/* Always show this container, but change layout based on screen size */}
+      <div className="flex items-center w-full">
+        {/* Desktop Logo - Show from iPad size and up (explicit breakpoints) */}
+        <div className="hidden md:block lg:block xl:block 2xl:block flex-shrink-0">
+          <img
+            src="/images/logo.svg"
+            alt="MOJ Church Logo"
+            className="h-12 w-auto"
           />
-        </button>
-      </nav>
+        </div>
+        
+        {/* Desktop Navigation - Show from iPad size and up (explicit breakpoints) */}
+        <div className="hidden md:flex lg:flex xl:flex 2xl:flex flex-1 justify-center">
+          <nav>
+            <ul className="flex bg-white gap-2 px-6 py-2 rounded-full">
+              {links.map((link, index) => (
+                <PageLink
+                  src={link.src}
+                  content={link.content}
+                  className={
+                    link.src === currentAddress ? "bg-default text-white" : ""
+                  }
+                  key={index}
+                />
+              ))}
+            </ul>
+          </nav>
+        </div>
+        
+        {/* Right spacer for balance - Show from iPad size and up (explicit breakpoints) */}
+        <div className="hidden md:block lg:block xl:block 2xl:block flex-shrink-0 w-12"></div>
+
+         {/* Mobile Navigation - Only show on small screens (explicit breakpoints) */}
+        <nav className="flex sm:flex md:hidden lg:hidden xl:hidden 2xl:hidden items-center justify-between bg-[#A198AC] rounded-full p-3 sm:p-4 w-full">
+          <img 
+            src="/images/mobile_icon.png" 
+            alt="MOJ Mobile Icon" 
+            className="h-8 w-8 sm:h-10 sm:w-10" 
+          />
+          <button
+            onClick={() => setIsOpen(true)}
+            className="p-2 touch-manipulation"
+            aria-label="Open navigation menu"
+          >
+            <img 
+              src="/images/hamburger.png" 
+              alt="Menu" 
+              className="h-6 w-6 sm:h-8 sm:w-8" 
+            />
+          </button>
+        </nav>
+      </div>
 
       {/* Menu Overlay */}
       <div
