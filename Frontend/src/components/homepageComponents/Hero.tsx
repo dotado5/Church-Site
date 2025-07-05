@@ -70,7 +70,7 @@ const Hero: React.FC = () => {
             />
           ))}
           <PageHeader
-            title={" Minds Of Josiah: Where Teens Sparkle and Faith Shines!"}
+            title={" Minds Of Josiah"}
             description={
               " At MOJ, we believe in the unique potential that resides within every teenager. MOJ is not just a church—it's a community where teens soar to new heights. Our mission is to create an environment where teens can thrive intellectually, emotionally, and spiritually."
             }

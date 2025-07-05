@@ -55,7 +55,7 @@ const Articles = () => {
     return () => {
       isMounted = false;
     };
-  }, [currentPage, getAllArticlesWithAuthors]); // getAllArticlesWithAuthors is now properly memoized
+  }, [currentPage]); // Removed getAllArticlesWithAuthors to prevent infinite loops
 
   const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
