@@ -1,5 +1,6 @@
 // Use local backend for development (your backend is running on port 8000)
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+const API_BASE_URL = "http://localhost:8000";
 
 const ENDPOINTS = {
   GET_ALL_ARTICLES: "article",

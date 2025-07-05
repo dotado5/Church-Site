@@ -115,6 +115,18 @@ interface Memory {
   activityId: string;
 }
 
+interface AudioMessage {
+  _id: string;
+  title: string;
+  description: string;
+  audioUrl: string;
+  speaker: string;
+  date: string;
+  duration: string;
+  category: string;
+  thumbnail?: string;
+}
+
 export type { 
   Activity, 
   ActivityWithMemories,
@@ -128,5 +140,6 @@ export type {
   Coordinator, 
   Message,
   CoordinatorMessage,
-  Memory
+  Memory,
+  AudioMessage
 };

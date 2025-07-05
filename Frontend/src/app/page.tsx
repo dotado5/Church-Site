@@ -6,6 +6,7 @@ import Activities from "@/components/homepageComponents/Activities";
 import Hero from "@/components/homepageComponents/Hero";
 import LatestArticles from "@/components/homepageComponents/LatestArticles";
 import LatestEvents from "@/components/homepageComponents/LatestEvents";
+import LatestAudioMessages from "@/components/homepageComponents/LatestAudioMessages";
 import { CoordinatorCorner } from "@/components/homepageComponents/CoordinatorCorner";
 import useActivities from "@/hooks/useActivities";
 import { useArticles } from "@/hooks/useArticles";
@@ -61,6 +62,7 @@ function Home() {
         </section>
         <CoordinatorCorner />
         <LatestEvents />
+        <LatestAudioMessages />
         <LatestArticles fetchArticles={articles} />
         <Activities activities={activities} />
         <Footer />

@@ -49,6 +49,10 @@ export const Navbar = () => {
       content: "Articles",
     },
     {
+      src: "/audio-messages",
+      content: "Audio Messages",
+    },
+    {
       src: "/gallery",
       content: "Gallery",
     },
