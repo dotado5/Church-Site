@@ -3,9 +3,11 @@
 import WithNavbar from "@/Layout/WithNavbar";
 import { Footer } from "@/components/Footer";
 import Activities from "@/components/homepageComponents/Activities";
-import { DescriptionBox } from "@/components/homepageComponents/DescriptionBox";
 import Hero from "@/components/homepageComponents/Hero";
 import LatestArticles from "@/components/homepageComponents/LatestArticles";
+import LatestEvents from "@/components/homepageComponents/LatestEvents";
+import LatestAudioMessages from "@/components/homepageComponents/LatestAudioMessages";
+import { CoordinatorCorner } from "@/components/homepageComponents/CoordinatorCorner";
 import useActivities from "@/hooks/useActivities";
 import { useArticles } from "@/hooks/useArticles";
 import { Activity, Article } from "@/types/dataTypes";
@@ -26,8 +28,11 @@ function Home() {
   }, [pathName]);
 
   async function fetchPageData() {
-    const activitiesResponse = await fetchData(getAllActivities);
-    const articlesResponse = await fetchData(getAllArticles);
+    // Fetch all homepage data concurrently
+    const [activitiesResponse, articlesResponse] = await Promise.all([
+      fetchData(getAllActivities),
+      fetchData(getAllArticles),
+    ]);
 
     if (activitiesResponse && activitiesResponse.status === 200) {
       setActivities(activitiesResponse.data.data as Activity[]);
@@ -55,7 +60,9 @@ function Home() {
             <img src="/images/groupPic.svg" alt="" className="w-full h-full" />
           </motion.div>
         </section>
-        <DescriptionBox />
+        <CoordinatorCorner />
+        <LatestEvents />
+        <LatestAudioMessages />
         <LatestArticles fetchArticles={articles} />
         <Activities activities={activities} />
         <Footer />

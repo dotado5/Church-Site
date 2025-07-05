@@ -17,16 +17,47 @@
 }
 
 body {
-  @apply bg-default relative sm:px-[25px] md:px-[25px];
+  @apply bg-default relative px-4 sm:px-6 lg:px-[25px];
   /* overflow-hidden; */
 }
 
+/* Touch-friendly interactions */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Improved button focus states for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #FFD600;
+  outline-offset: 2px;
+}
+
 .navLinks {
-  transition: ease 0.5s;
+  transition: ease 0.3s;
 }
 
 .navLinks:hover {
   @apply bg-default text-white;
+}
+
+/* Improved mobile navigation links */
+.navLinks a {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+@media (max-width: 1023px) {
+  .navLinks a {
+    padding: 1rem 1.5rem;
+    min-height: 48px; /* Minimum touch target size */
+    display: flex;
+    align-items: center;
+  }
 }
 
 .pastorImg {
@@ -39,6 +70,12 @@ body {
 .article-box {
   /* box-shadow: 0px 20px 40px 0px #00000033; */
   box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.25);
 }
 
 /* Menu Overlay */
@@ -47,12 +84,14 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   z-index: 998;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 .menu-overlay.open {
@@ -60,24 +99,27 @@ body {
   visibility: visible;
 }
 
-/* Side Menu */
+/* Side Menu - Improved mobile design */
 .side-menu {
   position: fixed;
   top: 0;
-  left: -50%; /* Start off-screen */
-  width: 70%; /* Take up half the screen */
-  height: 100%;
-  background: #a198ac;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  left: -100%; /* Start completely off-screen */
+  width: min(85vw, 400px); /* Responsive width with max limit */
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
+  background: linear-gradient(135deg, #a198ac 0%, #8a7d8f 100%);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
   z-index: 999;
-  transition: left 0.5s ease;
+  transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .side-menu.open {
-  left: 0; /* Slide in */
+  left: 0;
 }
 
-/* Close Button */
+/* Improved close button */
 .close-button {
   background: none;
   border: none;
@@ -90,23 +132,279 @@ body {
   background: white;
 }
 
-/* Menu Items */
+/* Mobile menu improvements */
 .side-menu ul {
-  @apply flex flex-col gap-3;
-
+  @apply flex flex-col;
   list-style: none;
   margin: 0;
   width: 100%;
-  margin-top: 3em;
-  padding: 0px 20px;
+  padding: 0;
 }
 
 .side-menu ul li {
-  padding: 10px 0;
-  font-size: 18px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .side-menu ul li:hover {
-  background: #f0f0f0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.side-menu ul li:active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Floating SVG Animations */
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-40px) rotate(12deg);
+  }
+}
+
+@keyframes float-wave {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-30px) translateX(20px) rotate(8deg);
+  }
+  50% {
+    transform: translateY(-20px) translateX(0px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-45px) translateX(-20px) rotate(-8deg);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+}
+
+@keyframes float-drift {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-25px) translateX(18px) rotate(6deg);
+  }
+  66% {
+    transform: translateY(-35px) translateX(-12px) rotate(-4deg);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+}
+
+@keyframes float-bounce {
+  0%, 100% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-50px) scale(1.1) rotate(15deg);
+  }
+}
+
+@keyframes float-sway {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-18px) translateX(12px) rotate(10deg);
+  }
+  40% {
+    transform: translateY(-32px) translateX(-8px) rotate(-6deg);
+  }
+  60% {
+    transform: translateY(-25px) translateX(15px) rotate(12deg);
+  }
+  80% {
+    transform: translateY(-40px) translateX(-5px) rotate(-10deg);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+}
+
+@keyframes float-spiral {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-25px) translateX(25px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(-40px) translateX(0px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-25px) translateX(-25px) rotate(270deg);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(360deg);
+  }
+}
+
+/* Floating SVG Classes */
+.float-gentle {
+  animation: float-gentle 6s ease-in-out infinite;
+}
+
+.float-wave {
+  animation: float-wave 8s ease-in-out infinite;
+}
+
+.float-drift {
+  animation: float-drift 7s ease-in-out infinite;
+}
+
+.float-bounce {
+  animation: float-bounce 5s ease-in-out infinite;
+}
+
+.float-sway {
+  animation: float-sway 9s ease-in-out infinite;
+}
+
+.float-spiral {
+  animation: float-spiral 12s linear infinite;
+}
+
+/* Delay variations for natural movement */
+.float-delay-1 {
+  animation-delay: 0.5s;
+}
+
+.float-delay-2 {
+  animation-delay: 1s;
+}
+
+.float-delay-3 {
+  animation-delay: 1.5s;
+}
+
+.float-delay-4 {
+  animation-delay: 2s;
+}
+
+.float-delay-5 {
+  animation-delay: 2.5s;
+}
+
+/* Group picture floating animation */
+.group-pic-float {
+  animation: float-gentle 10s ease-in-out infinite;
+}
+
+/* Hover effects for floating elements */
+.float-gentle:hover,
+.float-wave:hover,
+.float-drift:hover,
+.float-bounce:hover,
+.float-sway:hover,
+.float-spiral:hover {
+  animation-play-state: paused;
+  transform: scale(1.1) rotate(5deg);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+/* Responsive floating - optimized for mobile performance */
+@media (max-width: 768px) {
+  .float-gentle,
+  .float-wave,
+  .float-drift,
+  .float-bounce,
+  .float-sway,
+  .float-spiral {
+    animation-duration: 8s;
+    will-change: transform; /* Optimize for mobile performance */
+  }
+  
+  .group-pic-float {
+    animation-duration: 12s;
+    will-change: transform;
+  }
+
+  /* Reduce motion intensity on mobile */
+  @keyframes float-gentle {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(6deg);
+    }
+  }
+
+  @keyframes float-bounce {
+    0%, 100% {
+      transform: translateY(0px) scale(1) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-25px) scale(1.05) rotate(8deg);
+    }
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .float-gentle,
+  .float-wave,
+  .float-drift,
+  .float-bounce,
+  .float-sway,
+  .float-spiral,
+  .group-pic-float {
+    animation: none;
+  }
+  
+  .article-box:hover {
+    transform: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  /* Improve touch targets */
+  button, a, input, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better spacing for mobile */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Optimize text readability */
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+}
+
+/* Safe area insets for devices with notches */
+@supports (padding: max(0px)) {
+  .safe-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .safe-left {
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+  
+  .safe-right {
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
 }

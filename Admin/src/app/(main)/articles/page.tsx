@@ -1,7 +1,293 @@
-import React from "react";
+"use client";
 
-const page = () => {
-  return <div>yoooo</div>;
-};
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import AuthenticatedLayout from "@/components/AuthenticatedLayout";
 
-export default page;
+interface Article {
+  _id: string;
+  title: string;
+  text: string;
+  displayImage: string;
+  authorId: string;
+  date: string;
+  readTime: string;
+  __v?: number;
+}
+
+interface Author {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  profileImage: string;
+}
+
+export default function ArticlesPage() {
+  const router = useRouter();
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedAuthor, setSelectedAuthor] = useState("all");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [articleToDelete, setArticleToDelete] = useState<Article | null>(null);
+  const [deleting, setDeleting] = useState(false);
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+  useEffect(() => {
+    fetchArticles();
+    fetchAuthors();
+  }, []);
+
+  const fetchArticles = async () => {
+    try {
+      const response = await fetch(`${API_URL}/article`);
+      const data = await response.json();
+      
+      if (data.status === "Success" && data.data) {
+        setArticles(data.data || []);
+      } else {
+        toast.error("Failed to fetch articles");
+      }
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      toast.error("Error fetching articles");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchAuthors = async () => {
+    try {
+      const response = await fetch(`${API_URL}/author`);
+      const data = await response.json();
+      
+      if (data.status === "Success" && data.data) {
+        setAuthors(data.data || []);
+      }
+    } catch (error) {
+      console.error("Error fetching authors:", error);
+    }
+  };
+
+  const handleDelete = async (article: Article) => {
+    setArticleToDelete(article);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!articleToDelete) return;
+
+    setDeleting(true);
+    try {
+      const response = await fetch(`${API_URL}/article/${articleToDelete._id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setArticles(articles.filter(a => a._id !== articleToDelete._id));
+        toast.success("Article deleted successfully");
+        setShowDeleteModal(false);
+        setArticleToDelete(null);
+      } else {
+        toast.error("Failed to delete article");
+      }
+    } catch (error) {
+      console.error("Error deleting article:", error);
+      toast.error("Error deleting article");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const filteredArticles = articles.filter(article => {
+    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         article.text.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesAuthor = selectedAuthor === "all" || article.authorId === selectedAuthor;
+    return matchesSearch && matchesAuthor;
+  });
+
+  const getAuthorName = (authorId: string) => {
+    const author = authors.find(a => a._id === authorId);
+    return author ? `${author.firstName} ${author.lastName}` : "Unknown Author";
+  };
+
+  if (loading) {
+    return (
+      <AuthenticatedLayout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        </div>
+      </AuthenticatedLayout>
+    );
+  }
+
+  return (
+    <AuthenticatedLayout>
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Articles</h1>
+            <p className="text-gray-600">Manage your church articles and content</p>
+          </div>
+          <button
+            onClick={() => router.push("/articles/new")}
+            className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            New Article
+          </button>
+        </div>
+
+        {/* Filters */}
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-2">
+                Search Articles
+              </label>
+              <input
+                type="text"
+                id="search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search by title or content..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="author" className="block text-sm font-medium text-gray-700 mb-2">
+                Filter by Author
+              </label>
+              <select
+                id="author"
+                value={selectedAuthor}
+                onChange={(e) => setSelectedAuthor(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="all">All Authors</option>
+                {authors.map(author => (
+                  <option key={author._id} value={author._id}>
+                    {author.firstName} {author.lastName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Articles List */}
+        <div className="bg-white rounded-lg shadow">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Articles ({filteredArticles.length})
+            </h2>
+          </div>
+          
+          {filteredArticles.length === 0 ? (
+            <div className="p-6 text-center">
+              <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <p className="text-gray-500">No articles found</p>
+              <button
+                onClick={() => router.push("/articles/new")}
+                className="mt-4 inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700"
+              >
+                Create your first article
+              </button>
+            </div>
+          ) : (
+            <div className="divide-y divide-gray-200">
+              {filteredArticles.map((article) => (
+                <div key={article._id} className="p-6 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-3">
+                        {article.displayImage && (
+                          <img
+                            src={article.displayImage}
+                            alt={article.title}
+                            className="w-16 h-16 object-cover rounded-lg"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        )}
+                        <div className="flex-1">
+                          <h3 className="text-lg font-medium text-gray-900 mb-1">
+                            {article.title}
+                          </h3>
+                          <p className="text-gray-600 text-sm mb-2">
+                            {article.text.substring(0, 150)}...
+                          </p>
+                          <div className="flex items-center space-x-4 text-sm text-gray-500">
+                            <span>By {getAuthorName(article.authorId)}</span>
+                            <span>•</span>
+                            <span>{new Date(article.date).toLocaleDateString()}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => router.push(`/articles/${article._id}/edit`)}
+                        className="inline-flex items-center px-3 py-1 text-sm font-medium text-indigo-600 bg-indigo-100 rounded-md hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      >
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(article)}
+                        className="inline-flex items-center px-3 py-1 text-sm font-medium text-red-600 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500"
+                      >
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Delete Modal */}
+        {showDeleteModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-lg p-6 w-full max-w-md">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Delete Article</h3>
+              <p className="text-gray-600 mb-6">
+                Are you sure you want to delete "{articleToDelete?.title}"? This action cannot be undone.
+              </p>
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => setShowDeleteModal(false)}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  disabled={deleting}
+                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50"
+                >
+                  {deleting ? "Deleting..." : "Delete"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </AuthenticatedLayout>
+  );
+}

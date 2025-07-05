@@ -4,28 +4,42 @@ const Http = {
   get: async (url: string) => {
     try {
       const response = await axios.get(url);
-
       return response;
     } catch (error) {
-      console.log(error);
+      console.error("GET request failed:", url, error);
+      throw error;
     }
   },
 
-  // post: async (url: string, body: any) => {
-  //     try {
-  //         const userToken = LocalStorage.get(USER_ACCESS_TOKEN)
+  post: async (url: string, body: any, config?: any) => {
+    try {
+      const response = await axios.post(url, body, config);
+      return response;
+    } catch (error) {
+      console.error("POST request failed:", url, error);
+      throw error;
+    }
+  },
 
-  //         const response = await axios.post(url, body, { headers: { Authorization: `Bearer ${userToken}` } });
+  put: async (url: string, body: any, config?: any) => {
+    try {
+      const response = await axios.put(url, body, config);
+      return response;
+    } catch (error) {
+      console.error("PUT request failed:", url, error);
+      throw error;
+    }
+  },
 
-  //         if (response.status !== 200) {
-  //             return await Promise.reject(response);
-  //         }
-
-  //         return response;
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  // },
+  delete: async (url: string, config?: any) => {
+    try {
+      const response = await axios.delete(url, config);
+      return response;
+    } catch (error) {
+      console.error("DELETE request failed:", url, error);
+      throw error;
+    }
+  },
 };
 
 export default Http;

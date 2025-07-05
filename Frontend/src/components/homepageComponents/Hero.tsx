@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 import { PageHeader } from "../PageHeader";
 import { Button } from "../Button";
 import HeroImage, { HeroImageProps } from "../HeroImage";
@@ -6,31 +7,47 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 const Hero: React.FC = () => {
+  const router = useRouter();
+
+  const handleBecomeMember = () => {
+    router.push("/contact");
+  };
+
   const images: HeroImageProps[] = [
     {
       src: "/images/Group1.svg",
       className:
-        "absolute top-[-1em] right-[223px] sm:top-[32%] sm:right-[-0.5em] md:top-[32%] md:right-[-0.5em]",
+        "absolute top-8 right-8 sm:top-[25%] sm:right-4 md:top-[20%] md:right-8 lg:top-[-1em] lg:right-[223px]",
+      floatAnimation: "float-wave",
+      delay: "float-delay-1",
     },
     {
       src: "/images/Group3.svg",
       className:
-        "absolute bottom-[-1%] left-[30%] sm:bottom-[43%] sm:left-[15%] md:bottom-[43%] md:left-[6%]",
+        "absolute bottom-[35%] left-4 sm:bottom-[40%] sm:left-8 md:bottom-[35%] md:left-12 lg:bottom-[-1%] lg:left-[30%]",
+      floatAnimation: "float-drift",
+      delay: "float-delay-2",
     },
     {
       src: "/images/Group4.svg",
       className:
-        "absolute top-[18%] left-[12%] sm:top-[27%] sm:left-0 md:top-[27%] md:left-0",
+        "absolute top-[20%] left-2 sm:top-[25%] sm:left-4 md:top-[22%] md:left-6 lg:top-[18%] lg:left-[12%]",
+      floatAnimation: "float-bounce",
+      delay: "float-delay-3",
     },
     {
       src: "/images/Group5.svg",
       className:
-        " absolute right-[50%] top-[2em] sm:top-[12%] sm:right-[48%] md:top-[12%] md:right-[48%]",
+        "absolute top-[8%] right-[45%] sm:top-[12%] sm:right-[40%] md:top-[10%] md:right-[42%] lg:right-[50%] lg:top-[2em]",
+      floatAnimation: "float-sway",
+      delay: "float-delay-4",
     },
     {
       src: "/images/Group6.svg",
       className:
-        "absolute bottom-[25%] right-[10%] sm:bottom-[8%] sm:right-[5%] md:bottom-[8%] md:right-[15%]",
+        "absolute bottom-[15%] right-2 sm:bottom-[20%] sm:right-4 md:bottom-[18%] md:right-6 lg:bottom-[25%] lg:right-[10%]",
+      floatAnimation: "float-spiral",
+      delay: "float-delay-5",
     },
   ];
 
@@ -42,11 +59,13 @@ const Hero: React.FC = () => {
         exit={{ y: 10, opacity: 0 }}
         transition={{ duration: 1 }}
       >
-        <div className="relative flex flex-col items-center gap-5">
+        <div className="relative flex flex-col items-center gap-4 sm:gap-5 lg:gap-5 px-4 sm:px-6 lg:px-0">
           {images.map((image, index) => (
             <HeroImage
               src={image.src}
               className={image.className}
+              floatAnimation={image.floatAnimation}
+              delay={image.delay}
               key={index}
             />
           ))}
@@ -56,9 +75,15 @@ const Hero: React.FC = () => {
               " At MOJ, we believe in the unique potential that resides within every teenager. MOJ is not just a church—it's a community where teens soar to new heights. Our mission is to create an environment where teens can thrive intellectually, emotionally, and spiritually."
             }
             yellowText={false}
-            className="mt-[6em]"
+            className="mt-16 sm:mt-20 md:mt-24 lg:mt-[6em] max-w-6xl"
           />
-          <Button content={"Become a Member"} icon={true} />
+          <div className="mt-4 sm:mt-6">
+            <Button 
+              content={"Become a Member"} 
+              icon={true} 
+              onClick={handleBecomeMember}
+            />
+          </div>
         </div>
       </motion.div>
     </AnimatePresence>

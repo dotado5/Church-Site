@@ -1,90 +1,66 @@
-import React from "react";
-import { Article, ArticleProps } from "../Article";
-import { Article as ArticleType } from "@/types/dataTypes";
+import React, { useEffect, useState } from "react";
+import { EnhancedArticle } from "../Article";
+import { Article as ArticleType, ArticleWithAuthor } from "@/types/dataTypes";
+import { useArticles } from "@/hooks/useArticles";
+import { fetchData } from "@/utils/fetchData";
 import Loader from "../Loader/Loader";
-
-export const articles: ArticleProps[] = [
-  {
-    src: "/images/article1.svg",
-    title: "Youth with a Difference",
-    author: "Author: Fatoki Victor",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-    length: "5 mins read",
-    dateUploaded: "24 hours ago",
-  },
-  {
-    src: "/images/article2.svg",
-    title: "Youth with a Difference",
-    author: "Author: Fatoki Victor",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-    length: "5 mins read",
-    dateUploaded: "24 hours ago",
-  },
-  {
-    src: "/images/article3.svg",
-    title: "Youth with a Difference",
-    author: "Author: Fatoki Victor",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-    length: "5 mins read",
-    dateUploaded: "24 hours ago",
-  },
-  {
-    src: "/images/article4.svg",
-    title: "Youth with a Difference",
-    author: "Author: Fatoki Victor",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-    length: "5 mins read",
-    dateUploaded: "24 hours ago",
-  },
-  {
-    src: "/images/article5.svg",
-    title: "Youth with a Difference",
-    author: "Author: Fatoki Victor",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-    length: "5 mins read",
-    dateUploaded: "24 hours ago",
-  },
-  {
-    src: "/images/article6.svg",
-    title: "Youth with a Difference",
-    author: "Author: Fatoki Victor",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-    length: "5 mins read",
-    dateUploaded: "24 hours ago",
-  },
-  {
-    src: "/images/article7.svg",
-    title: "Youth with a Difference",
-    author: "Author: Fatoki Victor",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-    length: "5 mins read",
-    dateUploaded: "24 hours ago",
-  },
-  {
-    src: "/images/article8.svg",
-    title: "Youth with a Difference",
-    author: "Author: Fatoki Victor",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Parturient curabitur ipsum vitae ultricies vitae. Aenean arcu hac est.",
-    length: "5 mins read",
-    dateUploaded: "24 hours ago",
-  },
-];
 
 const LatestArticles = ({
   fetchArticles,
 }: {
   fetchArticles: ArticleType[];
 }) => {
-  if (fetchArticles.length === 0) {
-    return <Loader text={""} textColor={"mt-[2em]"} />;
+  const { getAllArticlesWithAuthors } = useArticles();
+  const [enhancedArticles, setEnhancedArticles] = useState<ArticleWithAuthor[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchEnhancedArticles();
+  }, []);
+
+  async function fetchEnhancedArticles() {
+    try {
+      setLoading(true);
+      const articlesResponse = await fetchData(() => getAllArticlesWithAuthors(1, 4));
+
+      if (articlesResponse?.status === 200) {
+        setEnhancedArticles(articlesResponse.data.data as ArticleWithAuthor[]);
+      }
+    } catch (error) {
+      console.error("Error fetching enhanced articles:", error);
+      // Fallback: use the passed articles if enhanced fetch fails
+      const fallbackArticles: ArticleWithAuthor[] = fetchArticles.slice(0, 4).map((article, index) => ({
+        _id: `fallback-${index}`,
+        displayImage: article.displayImage || "/images/Frame.png",
+        title: article.title,
+        authorId: article.authorId,
+        author: {
+          _id: "unknown",
+          firstName: "Unknown",
+          lastName: "Author",
+          fullName: "Unknown Author",
+          profileImage: "/images/Frame.png",
+        },
+        text: article.text,
+        excerpt: article.text.substring(0, 100) + "...",
+        date: article.date,
+        formattedDate: new Date(article.date).toLocaleDateString(),
+        timeAgo: "Recently",
+        readTime: article.readTime,
+        estimatedReadTime: "5 mins read",
+      }));
+      setEnhancedArticles(fallbackArticles);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
+    return <Loader text="" textColor="mt-[2em]" />;
+  }
+
+  if (enhancedArticles.length === 0) {
+    return <Loader text="" textColor="mt-[2em]" />;
   }
 
   return (
@@ -96,15 +72,10 @@ const LatestArticles = ({
         Latest Articles
       </h1>
       <div className="grid xl:grid-cols-4 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-2 xl:gap-4 lg:gap-4 sm:gap-2 md:gap-2 ">
-        {articles.slice(0, 4).map((article, index) => (
-          <Article
-            src={fetchArticles[index].displayImage}
-            title={fetchArticles[index].title}
-            author={article.author}
-            description={fetchArticles[index].text.slice(0, 100)}
-            length={article.length}
-            dateUploaded={article.dateUploaded}
-            key={index}
+        {enhancedArticles.map((article) => (
+          <EnhancedArticle
+            key={article._id}
+            article={article}
             homePage={true}
           />
         ))}
